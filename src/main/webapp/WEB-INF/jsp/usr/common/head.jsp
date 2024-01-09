@@ -20,9 +20,10 @@
 <title>${pageTitle}</title>
 </head>
 <body>
-	<header class="fixed w-full bg-orange-300 z-10 flex items-center">
+	<header class="fixed w-full bg-orange-300 z-10 flex justify-end items-center">
+		<ul class="flex">
+			<li class="p-2"><a href="/usr/member/login">로그인</a></li>
+			<li class="p-2"><a href="/usr/member/join">회원가입</a></li>
+		</ul>
 	</header>
 	<div class="h-[100px]"></div>
-	<div class="container mx-auto mb-[25px]">
-		<h1 class="flex justify-center text-3xl">${pageTitle }</h1>
-	</div>
