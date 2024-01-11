@@ -17,13 +17,17 @@
 <script src="/resource/common.js" defer="defer"></script>
 <!-- toast ui -->
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<!-- 사이트 아이콘 -->
+<link rel="icon" href="/resource/funkinCat.png" />
+
 <title>${pageTitle}</title>
 </head>
 <body>
-	<header class="fixed w-full bg-orange-300 z-10 flex justify-end items-center">
+	<header class="fixed w-full z-10 flex justify-end items-center top-4 right-2">
 		<ul class="flex">
-			<li class="p-2"><a href="/usr/member/login">로그인</a></li>
-			<li class="p-2"><a href="/usr/member/join">회원가입</a></li>
+			<li class="p-2 btn btn-sm btn-outline btn-accent"><a href="/usr/member/login">로그인</a></li>
+			<li class="p-2 btn btn-sm btn-outline btn-accent"><a href="/usr/member/join">회원가입</a></li>
 		</ul>
 	</header>
-	<div class="h-[100px]"></div>
+	
+	
