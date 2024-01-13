@@ -13,5 +13,11 @@ public interface MemberDao {
 				WHERE loginId = #{loginId}
 			""")
 	public Member getMemberByLoginId(String loginId);
+
+	@Select("""
+				SELECT * FROM member
+				WHERE id = #{memberId}
+			""")
+	public Member getMemberById(int memberId);
 	
 }

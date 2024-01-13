@@ -24,9 +24,16 @@
 </head>
 <body>
 	<header class="fixed w-full z-10 flex justify-end items-center top-4 right-2">
+		<button class="btn btn-sm btn-outline btn-accent mr-auto ml-[20px]"><a href="/">develog</a></button>
 		<ul class="flex">
-			<li class="p-2 btn btn-sm btn-outline btn-accent"><a href="/usr/member/login">로그인</a></li>
-			<li class="p-2 btn btn-sm btn-outline btn-accent"><a href="/usr/member/join">회원가입</a></li>
+			<c:if test="${rq.getLoginedMemberId() == 0}">
+				<li class="p-2 btn btn-sm btn-outline btn-accent"><a href="/usr/member/login">로그인</a></li>
+				<li class="p-2 btn btn-sm btn-outline btn-accent"><a href="/usr/member/join">회원가입</a></li>
+			</c:if>
+			<c:if test="${rq.getLoginedMemberId() != 0}">
+				<li class="p-2 btn btn-sm btn-outline btn-accent"><a href="/usr/article/blogMain?memberId=${rq.getLoginedMemberId() }">내 블로그</a></li>
+				<li class="p-2 btn btn-sm btn-outline btn-accent"><a href="/usr/member/doLogout">로그아웃</a></li>
+			</c:if>
 		</ul>
 	</header>
 	

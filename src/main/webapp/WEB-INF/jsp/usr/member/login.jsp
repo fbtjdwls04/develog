@@ -18,11 +18,17 @@
 				return;
 			}
 			
-			
 			e.submit();
 		}
   	</script>
   	
+  	<!-- 배경화면  -->
+   	<div class="fixed left-0 right-0 top-0">
+   		<img src="https://t1.daumcdn.net/cfile/tistory/2250EA5054FF120605" 
+   		alt=""
+   		class="w-full opacity-80" />
+   	</div>
+   	
   	<section class="container mx-auto relative mt-[200px]">
   		<form action="doLogin" onsubmit="loginSubmit(this); return false;">
 			<input type="text" name="loginId" class="input input-outline"/>  		

@@ -8,7 +8,7 @@ import com.koreaIT.develog.vo.Member;
 @Service
 public class MemberService {
 	
-	MemberDao memberDao;
+	private MemberDao memberDao;
 	
 	public MemberService(MemberDao memberDao) {
 		this.memberDao = memberDao;
@@ -16,6 +16,10 @@ public class MemberService {
 
 	public Member getMemberByLoginId(String loginId) {
 		return memberDao.getMemberByLoginId(loginId);
+	}
+
+	public Member getMemberById(int memberId) {
+		return memberDao.getMemberById(memberId);
 	}
 
 }
