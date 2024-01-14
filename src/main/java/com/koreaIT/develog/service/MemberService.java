@@ -22,4 +22,9 @@ public class MemberService {
 		return memberDao.getMemberById(memberId);
 	}
 
+	public void doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
+			String email) {
+		memberDao.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
+	}
+
 }

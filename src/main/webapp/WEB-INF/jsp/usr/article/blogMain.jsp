@@ -12,11 +12,10 @@
    		class="w-full opacity-80" />
    	</div>
    	
-   	<section class="container min-h-[1000px] mx-auto border relative mt-[200px] text-[white] bg-[rgb(60,64,67)]">
-   		<div class="flex h-full">
+   	<section class="flex container min-h-[1000px] mx-auto border relative mt-[200px] text-[white] bg-[rgb(60,64,67)]">
+   		<div class="flex">
    			<%@ include file="../common/sideMenu.jsp" %>
    		</div>
-   		
    	</section>
 	
 <%@ include file="../common/foot.jsp" %>
