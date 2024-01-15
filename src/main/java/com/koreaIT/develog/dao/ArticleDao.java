@@ -16,4 +16,10 @@ public interface ArticleDao {
 			""")
 	List<Article> getArticles(int memberId);
 
+	@Select("""
+			SELECT * FROM article
+			WHERE id = #{id}
+		""")
+	Article getArticleById(int id);
+
 }

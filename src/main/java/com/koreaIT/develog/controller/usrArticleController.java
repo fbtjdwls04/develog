@@ -31,10 +31,24 @@ public class usrArticleController {
 		Member member = memberService.getMemberById(memberId);
 		List<Article> articles = articleService.getArticles(memberId); 
 		
-		model.addAttribute("member",member);
+		model.addAttribute("nickname",member.getNickname());
+		model.addAttribute("memberId",member.getId());
 		model.addAttribute("articles",articles);
 		
 		return "/usr/article/blogMain";
+	}
+	
+	@RequestMapping("/usr/article/detail")
+	public String detail(Model model, int id, int memberId) {
+		
+		Member member = memberService.getMemberById(memberId);
+		Article article = articleService.getArticleById(id);
+		
+		model.addAttribute("nickname",member.getNickname());
+		model.addAttribute("memberId",member.getId());
+		model.addAttribute("article",article);
+		
+		return "/usr/article/detail";
 	}
 	
 }

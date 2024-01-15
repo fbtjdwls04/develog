@@ -114,4 +114,24 @@ public class usrMemberController {
 		
 		return ResultData.from("S-1", "사용 가능한 아이디");
 	}
+	
+	@RequestMapping("/usr/member/loginInfoCheck")
+	@ResponseBody
+	public ResultData loginInfoCheck(String loginId, String loginPw) {
+		
+		if(Util.empty(loginId)) {
+			return ResultData.from("F-1", "아이디를 입력해주세요");
+		}
+		if(Util.empty(loginPw)) {
+			return ResultData.from("F-2", "비밀번호를 입력해주세요");
+		}
+		
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		if(member == null || Util.sha256(loginPw).equals(member.getLoginPw()) == false) {
+			return ResultData.from("F-3", "아이디 또는 비밀번호를 확인해주세요");
+		}
+		
+		return ResultData.from("S-1", "로그인 성공");
+	}
 }

@@ -103,7 +103,7 @@
    	
 	<section class="flex justify-center relative mt-[200px]">
 		<form action="doJoin" onsubmit="joinSubmit(this); return false;" method="post">
-			<table class="table text-center bg-gray-100">
+			<table class="table text-center bg-gray-100 overflow-hidden">
 				<tr>
 					<th>아이디</th>
 					<td>
@@ -154,8 +154,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" class="p-0">
-						<button class="hover:bg-gray-200 w-full text-center p-4 font-bold">가입완료</button>
+					<td colspan="2" class="p-0 hover:bg-gray-200">
+						<button class="w-full text-center p-4 font-bold">가입완료</button>
 					</td>
 				</tr>
 			</table>

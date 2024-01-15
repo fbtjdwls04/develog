@@ -19,5 +19,9 @@ public class ArticleService {
 	public List<Article> getArticles(int memberId) {
 		return articleDao.getArticles(memberId);
 	}
+
+	public Article getArticleById(int id) {
+		return articleDao.getArticleById(id);
+	}
 	
 }
