@@ -7,8 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.koreaIT.develog.service.ArticleService;
+import com.koreaIT.develog.service.BoardService;
 import com.koreaIT.develog.service.MemberService;
 import com.koreaIT.develog.vo.Article;
+import com.koreaIT.develog.vo.Board;
 import com.koreaIT.develog.vo.Member;
 import com.koreaIT.develog.vo.Rq;
 
@@ -17,25 +19,29 @@ public class usrArticleController {
 	
 	private MemberService memberService;
 	private ArticleService articleService;
+	private BoardService boardService;
 	private Rq rq;
 	
-	public usrArticleController(MemberService memberService, ArticleService articleService, Rq rq) {
+	public usrArticleController(MemberService memberService, ArticleService articleService,BoardService boardService ,Rq rq) {
 		this.memberService = memberService;
 		this.articleService = articleService;
+		this.boardService = boardService;
 		this.rq = rq;
 	}
 	
-	@RequestMapping("/usr/article/blogMain")
+	@RequestMapping("/usr/article/list")
 	public String blogMain(Model model,int memberId) {
 		
 		Member member = memberService.getMemberById(memberId);
-		List<Article> articles = articleService.getArticles(memberId); 
+		List<Article> articles = articleService.getArticlesByMemberId(memberId); 
+		List<Board> boards = boardService.getBoardsByMemberId(memberId);
 		
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("memberId",member.getId());
 		model.addAttribute("articles",articles);
+		model.addAttribute("boards",boards);
 		
-		return "/usr/article/blogMain";
+		return "/usr/article/list";
 	}
 	
 	@RequestMapping("/usr/article/detail")
@@ -43,10 +49,12 @@ public class usrArticleController {
 		
 		Member member = memberService.getMemberById(memberId);
 		Article article = articleService.getArticleById(id);
+		List<Board> boards = boardService.getBoardsByMemberId(memberId);
 		
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("memberId",member.getId());
 		model.addAttribute("article",article);
+		model.addAttribute("boards",boards);
 		
 		return "/usr/article/detail";
 	}

@@ -18,22 +18,36 @@
 				${nickname} 의 블로그
 			</div>		
 			<nav class="flex-grow">
-				<ul class="border h-full">
-					<li>전체 글 보기</li>
-					<li>테스트1</li>
-					<li>테스트2</li>
+				<ul class="border h-full p-2">
+					<li class="mb-4">전체 글 보기</li>
+					<c:forEach var="board" items="${boards }">
+						<li>${board.name }</li>
+					</c:forEach>
 				</ul>
 			</nav>
    		</div>
-   		<div>
-   			${article.title }
-   		</div>
-   		<div>
-   			${article.body }
-   		</div>
-   		<div>
-   			${nickname }
-   		</div>
+   		<div class="break-words p-10 flex-grow" >
+   			<div class="p-4 border-b">
+				<p class="text-bold text-3xl" >${article.title }</p>
+				<br />
+				<span class="text-base font-bold">
+					<i class="fa-regular fa-user"></i>
+					${nickname}
+				</span>
+				&nbsp;
+				<span>${article.updateDate.substring(2,16) }</span>
+				&nbsp;
+				<span>조회 ${article.hitCount }</span>
+				&nbsp;
+				<span>추천 ${article.point}</span>
+   			</div>
+					
+			<div id="viewer" class="p-[50px]">
+				${article.body }
+			</div>
+		</div>
    	</section>
 	
+<%@ include file="../common/toast_ui_init.jsp" %>
+<%@ include file="../common/viewer_init.jsp" %>
 <%@ include file="../common/foot.jsp" %>
