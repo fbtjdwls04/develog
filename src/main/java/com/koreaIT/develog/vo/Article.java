@@ -22,6 +22,7 @@ public class Article {
 	
 //	recommendPoint join
 	private int point;
-	
 	private int replyCnt; 
+//  board join
+	private String boardName;
 }

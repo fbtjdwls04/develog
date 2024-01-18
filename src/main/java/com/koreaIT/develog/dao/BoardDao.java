@@ -14,4 +14,10 @@ public interface BoardDao {
 			WHERE memberId = #{memberId}
 		""")
 	public List<Board> getBoardsByMemberId(int memberId);
+
+	@Select("""
+			SELECT * FROM board
+			WHERE id = #{boardId}
+		""")
+	public Board getBoardById(int boardId);
 }

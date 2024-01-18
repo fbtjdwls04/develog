@@ -5,10 +5,13 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreaIT.develog.service.ArticleService;
 import com.koreaIT.develog.service.BoardService;
 import com.koreaIT.develog.service.MemberService;
+import com.koreaIT.develog.util.Util;
 import com.koreaIT.develog.vo.Article;
 import com.koreaIT.develog.vo.Board;
 import com.koreaIT.develog.vo.Member;
@@ -30,16 +33,18 @@ public class usrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/list")
-	public String blogMain(Model model,int memberId) {
+	public String blogMain(Model model,int memberId, @RequestParam(defaultValue = "0") int boardId) {
 		
 		Member member = memberService.getMemberById(memberId);
-		List<Article> articles = articleService.getArticlesByMemberId(memberId); 
+		List<Article> articles = articleService.getArticlesByMemberIdAndBoardId(memberId, boardId); 
 		List<Board> boards = boardService.getBoardsByMemberId(memberId);
+		Board board = boardService.getBoardById(boardId);
 		
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("memberId",member.getId());
 		model.addAttribute("articles",articles);
 		model.addAttribute("boards",boards);
+		model.addAttribute("board",board);
 		
 		return "/usr/article/list";
 	}
@@ -57,6 +62,39 @@ public class usrArticleController {
 		model.addAttribute("boards",boards);
 		
 		return "/usr/article/detail";
+	}
+	
+	@RequestMapping("/usr/article/write")
+	public String write(Model model) {
+		
+		List<Board> boards = boardService.getBoardsByMemberId(rq.getLoginedMemberId());
+		model.addAttribute("boards",boards);
+		
+		return "/usr/article/write";
+	}
+	
+	@RequestMapping("/usr/article/doWrite")
+	@ResponseBody
+	public String doWrite(int boardId, String title, String body) {
+		
+		if(Util.empty(title)) {
+			return Util.jsHistoryBack("제목을 입력해주세요");
+		}
+		if(Util.empty(body)) {
+			return Util.jsHistoryBack("내용을 입력해주세요");
+		}
+		
+		Board board = boardService.getBoardById(boardId);
+		
+		if(board.getMemberId() != rq.getLoginedMemberId()) {
+			return Util.jsHistoryBack("권한이 없습니다");
+		}
+		
+		articleService.doWrite(rq.getLoginedMemberId(),boardId, title, body);
+		
+		int id = articleService.getMyLastArticleId(rq.getLoginedMemberId());
+		
+		return Util.jsReplace("글이 작성되었습니다", Util.f("detail?id=%d&memberId=%s", id, rq.getLoginedMemberId()));
 	}
 	
 }

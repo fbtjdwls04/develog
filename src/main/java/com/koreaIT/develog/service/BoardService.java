@@ -19,6 +19,8 @@ public class BoardService {
 	public List<Board> getBoardsByMemberId(int memberId) {
 		return boardDao.getBoardsByMemberId(memberId);
 	}
-	
-	
+
+	public Board getBoardById(int boardId) {
+		return boardDao.getBoardById(boardId);
+	}
 }

@@ -32,6 +32,7 @@ CREATE TABLE board(
     id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
     `code` VARCHAR(20) NOT NULL COMMENT 'notice(공지사항), free(자유), ...',
     `name` VARCHAR(20) NOT NULL COMMENT '게시판 이름'
 );
@@ -80,11 +81,13 @@ updateDate = NOW(),
 title = CONCAT('제목', CEIL(RAND()*100)),
 `body` = CONCAT('내용', CEIL(RAND()*100));
 
+TRUNCATE `member`;
+
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'admin',
-loginPw = 'admin',
+loginPw = SHA2('admin',256),
 authLevel = 1,
 `name` = '관리자',
 nickname = 'admin',
@@ -112,14 +115,8 @@ cellphoneNum = '010-0000-0000',
 email = 'b@admin.com';
 
 INSERT INTO board
-SET `code` = 'notice',
-`name` = '공지사항',
-regDate = NOW(),
-updateDate = NOW();
-
-INSERT INTO board
-SET `code` = 'free',
-`name` = '자유',
+SET memberId = 3,
+`name` = '일반',
 regDate = NOW(),
 updateDate = NOW();
 
@@ -130,4 +127,10 @@ SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM recommendPoint;
 SELECT * FROM reply;
+
+
+
+
+
+
 

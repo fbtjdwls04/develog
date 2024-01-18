@@ -19,22 +19,43 @@
 			</div>		
 			<nav class="flex-grow">
 				<ul class="border h-full p-2">
-					<li class="mb-4">전체 글 보기</li>
+					<li class="mb-4"><a href="list?memberId=${memberId}">전체 글 보기</a></li>
 					<c:forEach var="board" items="${boards }">
-						<li>${board.name }</li>
+						<li><a href="list?memberId=${board.memberId }&boardId=${board.id } ">${board.name }</a></li>
 					</c:forEach>
 				</ul>
 			</nav>
    		</div>
    		<nav class="flex-grow">
-   			<h1 class="p-2">전체글 리스트</h1>
+   			<div class="flex items-center">
+	   			<c:if test="${board == null}">
+		   			<h1 class="p-2">전체글 리스트</h1>
+	   			</c:if>
+	   			<c:if test="${board.id != 0 }">
+		   			<h1 class="p-2">${board.name }</h1>
+	   			</c:if>
+	   			<c:if test="${rq.getLoginedMemberId() == memberId }">
+		   			<a href="write" class="btn btn-sm btn-outline ml-auto mr-[20px] btn-accent">글쓰기</a>
+	   			</c:if>
+   			</div>
 	   		<ul>
 		   		<c:forEach var="article" items="${articles }">
-		   			<a href="detail?id=${article.id }&memberId=${memberId}">
-			   			<li class="border-b p-2 m-2">
-			   			${article.title }
-			   			</li>
-		   			</a>
+		   			<li class="border-b p-2 m-2">
+			   			<a href="detail?id=${article.id }&memberId=${memberId}" class="flex">
+			   				<span class="ml-[20px]">
+			   					[${article.boardName }]
+			   				</span>
+			   				<span class="ml-[20px]">
+			   					${article.title }
+			   				</span>
+			   				<span class="ml-auto">
+			   					${article.regDate }
+			   				</span>
+			   				<span class="ml-[20px]">
+			   					추천 수 : ${article.hitCount }
+			   				</span>
+			   			</a>
+		   			</li>
 		   		</c:forEach>
 	  	 	</ul>
    		</nav>

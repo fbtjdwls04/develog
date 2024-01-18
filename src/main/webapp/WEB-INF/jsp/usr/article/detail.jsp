@@ -19,9 +19,9 @@
 			</div>		
 			<nav class="flex-grow">
 				<ul class="border h-full p-2">
-					<li class="mb-4">전체 글 보기</li>
+					<li class="mb-4"><a href="list?memberId=${memberId}">전체 글 보기</a></li>
 					<c:forEach var="board" items="${boards }">
-						<li>${board.name }</li>
+						<li><a href="list?memberId=${board.memberId }&boardId=${board.id } ">${board.name }</a></li>
 					</c:forEach>
 				</ul>
 			</nav>
