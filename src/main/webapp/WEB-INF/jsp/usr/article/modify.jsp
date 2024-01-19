@@ -13,7 +13,7 @@
    	</div>
    	
    	<section class="flex container min-h-[1000px] mx-auto border relative mt-[200px] bg-[rgb(60,64,67)]">
-   		<form action="doWrite" onsubmit="submitForm(this); return false;">
+   		<form action="doModify" onsubmit="submitForm(this); return false;">
    			<select class="select w-full max-w-xs" name="boardId">
 			  <option disabled selected value="0">게시판을 선택해주세요</option>
 			  <c:forEach var="board" items="${boards }">
@@ -21,10 +21,11 @@
 			  </c:forEach>
 			</select>
 			<br />
-   			<input type="text" name="title" class="input input-outline w-full" placeholder="제목을 입력해주세요"/>
+   			<input type="text" name="title" class="input input-outline w-full" placeholder="제목을 입력해주세요" value="${article.title }"/>
    			<input type="hidden" name="body"/>
-   			<div id="editor" class="bg-white"></div>
-   			<button class="btn ml-auto">작성</button>
+   			<input type="hidden" name="id" value="${article.id }"/>
+   			<div id="editor" class="bg-white">${article.body }</div>
+   			<button class="btn ml-auto">수정</button>
    		</form>
    	</section>
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.koreaIT.develog.vo.Article;
 
@@ -52,5 +53,15 @@ public interface ArticleDao {
 			`body` = #{body}
 			""")
 	public void doWrite(int memberId, int boardId, String title, String body);
+
+	@Update("""
+			UPDATE article
+			SET updateDate = NOW(),
+			boardId = #{boardId},
+			title = #{title},
+			`body` = #{body}
+			WHERE id = #{id}
+			""")
+	public void doModify(int id, int boardId, String title, String body);
 
 }

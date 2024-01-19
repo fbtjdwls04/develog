@@ -2,8 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
    	
-<c:set var="pageTitle" value="develog" />
-   	
 <%@ include file="../common/head.jsp" %>
    	<!-- 배경화면  -->
    	<div class="fixed left-0 right-0 top-0">
@@ -13,19 +11,9 @@
    	</div>
    	
    	<section class="flex container min-h-[1000px] mx-auto border relative mt-[200px] text-[white] bg-[rgb(60,64,67)]">
-   		<div class="flex flex-col w-[300px]">
-			<div class="border h-[400px] break-words">
-				${nickname} 의 블로그
-			</div>		
-			<nav class="flex-grow">
-				<ul class="border h-full p-2">
-					<li class="mb-4"><a href="list?memberId=${memberId}">전체 글 보기</a></li>
-					<c:forEach var="board" items="${boards }">
-						<li><a href="list?memberId=${board.memberId }&boardId=${board.id } ">${board.name }</a></li>
-					</c:forEach>
-				</ul>
-			</nav>
-   		</div>
+   	
+		<%@ include file="../common/sideBoardList.jsp" %>   		
+		
    		<nav class="flex-grow">
    			<div class="flex items-center">
 	   			<c:if test="${board == null}">

@@ -31,5 +31,9 @@ public class ArticleService {
 	public void doWrite(int memberId, int boardId, String title, String body) {
 		articleDao.doWrite(memberId,boardId, title, body);
 	}
+
+	public void doModify(int id, int boardId, String title, String body) {
+		articleDao.doModify(id,boardId, title, body);
+	}
 	
 }

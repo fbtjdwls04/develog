@@ -33,12 +33,16 @@ public class usrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/list")
-	public String blogMain(Model model,int memberId, @RequestParam(defaultValue = "0") int boardId) {
+	public String showList(Model model,int memberId, @RequestParam(defaultValue = "0") int boardId) {
 		
 		Member member = memberService.getMemberById(memberId);
 		List<Article> articles = articleService.getArticlesByMemberIdAndBoardId(memberId, boardId); 
 		List<Board> boards = boardService.getBoardsByMemberId(memberId);
 		Board board = boardService.getBoardById(boardId);
+		
+		if(member == null) {
+			return rq.jsReturnOnView("잘못된 접근입니다.");
+		}
 		
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("memberId",member.getId());
@@ -50,16 +54,29 @@ public class usrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/detail")
-	public String detail(Model model, int id, int memberId) {
+	public String showDetail(Model model, int id, int memberId) {
 		
 		Member member = memberService.getMemberById(memberId);
 		Article article = articleService.getArticleById(id);
 		List<Board> boards = boardService.getBoardsByMemberId(memberId);
 		
+		if(member == null) {
+			return rq.jsReturnOnView("잘못된 접근입니다.");
+		}
+		if(article == null) {
+			return rq.jsReturnOnView("잘못된 접근입니다.");
+		}
+		if(article.getMemberId() != memberId) {
+			return rq.jsReturnOnView("잘못된 접근입니다.");
+		}
+		
+		Board board = boardService.getBoardById(article.getBoardId());
+		
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("memberId",member.getId());
 		model.addAttribute("article",article);
 		model.addAttribute("boards",boards);
+		model.addAttribute("boardName",board.getName());
 		
 		return "/usr/article/detail";
 	}
@@ -77,6 +94,7 @@ public class usrArticleController {
 	@ResponseBody
 	public String doWrite(int boardId, String title, String body) {
 		
+		
 		if(Util.empty(title)) {
 			return Util.jsHistoryBack("제목을 입력해주세요");
 		}
@@ -84,8 +102,13 @@ public class usrArticleController {
 			return Util.jsHistoryBack("내용을 입력해주세요");
 		}
 		
+		title = Util.cleanText(title);
+		
 		Board board = boardService.getBoardById(boardId);
 		
+		if(board == null) {
+			return Util.jsHistoryBack("잘못된 접근입니다");
+		}
 		if(board.getMemberId() != rq.getLoginedMemberId()) {
 			return Util.jsHistoryBack("권한이 없습니다");
 		}
@@ -95,6 +118,65 @@ public class usrArticleController {
 		int id = articleService.getMyLastArticleId(rq.getLoginedMemberId());
 		
 		return Util.jsReplace("글이 작성되었습니다", Util.f("detail?id=%d&memberId=%s", id, rq.getLoginedMemberId()));
+	}
+	
+	@RequestMapping("/usr/article/modify")
+	public String modify(Model model, int id) {
+		
+		Article article = articleService.getArticleById(id);
+		
+		if(article == null) {
+			return rq.jsReturnOnView("잘못된 접근입니다");
+		}
+		
+		if(article.getMemberId() != rq.getLoginedMemberId()) {
+			return rq.jsReturnOnView("권한이 없습니다");
+		}
+		
+		List<Board> boards = boardService.getBoardsByMemberId(rq.getLoginedMemberId());
+		model.addAttribute("boards",boards);
+		model.addAttribute("article",article);
+		
+		return "/usr/article/modify";
+	}
+	
+	@RequestMapping("/usr/article/doModify")
+	@ResponseBody
+	public String doModify(int id,int boardId, String title, String body) {
+		
+		
+		if(Util.empty(title)) {
+			return Util.jsHistoryBack("제목을 입력해주세요");
+		}
+		if(Util.empty(body)) {
+			return Util.jsHistoryBack("내용을 입력해주세요");
+		}
+		
+		title = Util.cleanText(title);
+		
+		Board board = boardService.getBoardById(boardId);
+		
+		if(board == null) {
+			return Util.jsHistoryBack("잘못된 접근입니다");
+		}
+		
+		if(board.getMemberId() != rq.getLoginedMemberId()) {
+			return Util.jsHistoryBack("권한이 없습니다");
+		}
+		
+		Article article = articleService.getArticleById(id);
+		
+		if(article == null) {
+			return Util.jsHistoryBack("잘못된 접근입니다");
+		}
+		
+		if(article.getMemberId() != rq.getLoginedMemberId()) {
+			return Util.jsHistoryBack("권한이 없습니다");
+		}
+		
+		articleService.doModify(id,boardId, title, body);
+		
+		return Util.jsReplace("글이 수정되었습니다", Util.f("detail?id=%d&memberId=%s", id, rq.getLoginedMemberId()));
 	}
 	
 }
