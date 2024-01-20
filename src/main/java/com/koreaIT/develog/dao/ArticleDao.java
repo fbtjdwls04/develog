@@ -2,6 +2,7 @@ package com.koreaIT.develog.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -63,5 +64,11 @@ public interface ArticleDao {
 			WHERE id = #{id}
 			""")
 	public void doModify(int id, int boardId, String title, String body);
+
+	@Delete("""
+			DELETE FROM article
+			WHERE id = #{id}
+			""")
+	public void doDeleteArticle(int id);
 
 }

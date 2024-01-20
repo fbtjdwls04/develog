@@ -36,7 +36,9 @@
 			</div>
 			<div class="my-4">
 				<a href="modify?id=${article.id }" class="btn btn-sm btn-outline btn-accent">수정</a>
-				<a href="doDelete" class="btn btn-sm btn-outline btn-accent">삭제</a>
+				<button class="btn btn-sm btn-outline btn-accent" onclick="if(confirm('게시글을 삭제하시겠습니까?')) location.replace('doDelete?id=${article.id}');">
+					삭제
+				</button>
 			</div>
 			<hr />
 			<div class="my-4">

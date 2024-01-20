@@ -35,5 +35,9 @@ public class ArticleService {
 	public void doModify(int id, int boardId, String title, String body) {
 		articleDao.doModify(id,boardId, title, body);
 	}
+
+	public void doDeleteArticle(int id) {
+		articleDao.doDeleteArticle(id);
+	}
 	
 }

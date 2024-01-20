@@ -179,4 +179,23 @@ public class usrArticleController {
 		return Util.jsReplace("글이 수정되었습니다", Util.f("detail?id=%d&memberId=%s", id, rq.getLoginedMemberId()));
 	}
 	
+	@RequestMapping("/usr/article/doDelete")
+	@ResponseBody
+	public String doDelete(Model model, int id) {
+		
+		Article article = articleService.getArticleById(id);
+		
+		if(article == null) {
+			return rq.jsReturnOnView("잘못된 접근입니다");
+		}
+		
+		if(article.getMemberId() != rq.getLoginedMemberId()) {
+			return rq.jsReturnOnView("권한이 없습니다");
+		}
+		
+		articleService.doDeleteArticle(id);
+		
+		return Util.jsReplace("게시글이 삭제되었습니다", Util.f("/usr/article/list?memberId=%d&boardId=%d", article.getMemberId(), article.getBoardId()));
+	}
+	
 }
