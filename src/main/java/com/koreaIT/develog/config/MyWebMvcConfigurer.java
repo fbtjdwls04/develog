@@ -36,10 +36,12 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir = registry.addInterceptor(needLoginInterceptor);
 		ir.addPathPatterns("/usr/article/write");
 		ir.addPathPatterns("/usr/article/doWrite");
+		ir.addPathPatterns("/usr/article/modify");
+		ir.addPathPatterns("/usr/article/doModify");
+		ir.addPathPatterns("/usr/article/doDelete");
 		ir.addPathPatterns("/usr/reply/doWrite");
 		ir.addPathPatterns("/usr/member/doLogout");
 		ir.addPathPatterns("/usr/recommendPoint/doRecommendPoint");
-		ir.addPathPatterns("/usr/ws/paintingRoom");
 		
 		ir = registry.addInterceptor(needLogoutInterceptor);
 		ir.addPathPatterns("/usr/member/login");

@@ -59,7 +59,7 @@ TRUNCATE article;
 
 INSERT INTO article
 SET memberId = 1,
-boardId = 1,
+boardId = 4,
 regDate = NOW(),
 updateDate = NOW(),
 title = CONCAT('제목', CEIL(RAND()*100)),
@@ -115,8 +115,8 @@ cellphoneNum = '010-0000-0000',
 email = 'b@admin.com';
 
 INSERT INTO board
-SET memberId = 3,
-`name` = '일반',
+SET memberId = 1,
+`name` = '일상',
 regDate = NOW(),
 updateDate = NOW();
 
@@ -129,7 +129,10 @@ SELECT * FROM recommendPoint;
 SELECT * FROM reply;
 
 
-
+select a.*, 
+       b.id as boardId,
+       b.name
+from board as b inner join article as a where b.id = a.boardId;
 
 
 

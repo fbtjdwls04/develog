@@ -16,8 +16,8 @@ public class ArticleService {
 		this.articleDao = articleDao;
 	}
 	
-	public List<Article> getArticlesByMemberIdAndBoardId(int memberId, int boardId) {
-		return articleDao.getArticlesByMemberIdAndBoardId(memberId, boardId);
+	public List<Article> getArticles(int memberId, int boardId, int startLimit, int itemsInAPage) {
+		return articleDao.getArticles(memberId, boardId,startLimit,itemsInAPage);
 	}
 
 	public Article getArticleById(int id) {
@@ -28,16 +28,20 @@ public class ArticleService {
 		return articleDao.getMyLastArticleId(memberId);
 	}
 
-	public void doWrite(int memberId, int boardId, String title, String body) {
-		articleDao.doWrite(memberId,boardId, title, body);
+	public void doWriteArticle(int memberId, int boardId, String title, String body) {
+		articleDao.doWriteArticle(memberId,boardId, title, body);
 	}
 
-	public void doModify(int id, int boardId, String title, String body) {
-		articleDao.doModify(id,boardId, title, body);
+	public void doModifyArticle(int id, int boardId, String title, String body) {
+		articleDao.doModifyArticle(id,boardId, title, body);
 	}
 
 	public void doDeleteArticle(int id) {
 		articleDao.doDeleteArticle(id);
+	}
+
+	public int getArticlesCnt(int memberId, int boardId) {
+		return articleDao.getArticlesCnt(memberId, boardId);
 	}
 	
 }

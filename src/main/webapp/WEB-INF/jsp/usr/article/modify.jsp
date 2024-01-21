@@ -15,9 +15,9 @@
    	<section class="flex container min-h-[1000px] mx-auto border relative mt-[200px] bg-[rgb(60,64,67)]">
    		<form action="doModify" onsubmit="submitForm(this); return false;">
    			<select class="select w-full max-w-xs" name="boardId">
-			  <option disabled selected value="0">게시판을 선택해주세요</option>
+			  <option disabled value="0">게시판을 선택해주세요</option>
 			  <c:forEach var="board" items="${boards }">
-			  	<option value="${board.id }">${board.name }</option>
+			  	<option value="${board.id }" ${board.id == article.boardId ? 'selected' : ''}>${board.name }</option>
 			  </c:forEach>
 			</select>
 			<br />

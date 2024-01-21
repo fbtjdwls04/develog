@@ -25,10 +25,12 @@ public interface ArticleDao {
 				<if test='boardId != 0'>
 					AND a.boardId = #{boardId}
 				</if>
+				ORDER BY a.id DESC
+				LIMIT #{startLimit}, #{itemsInAPage}
 				
 			</script>
 			""")
-	public List<Article> getArticlesByMemberIdAndBoardId(int memberId, int boardId);
+	public List<Article> getArticles(int memberId, int boardId, int startLimit, int itemsInAPage);
 
 	@Select("""
 			SELECT * FROM article
@@ -53,7 +55,7 @@ public interface ArticleDao {
 			title = #{title},
 			`body` = #{body}
 			""")
-	public void doWrite(int memberId, int boardId, String title, String body);
+	public void doWriteArticle(int memberId, int boardId, String title, String body);
 
 	@Update("""
 			UPDATE article
@@ -63,12 +65,24 @@ public interface ArticleDao {
 			`body` = #{body}
 			WHERE id = #{id}
 			""")
-	public void doModify(int id, int boardId, String title, String body);
+	public void doModifyArticle(int id, int boardId, String title, String body);
 
 	@Delete("""
 			DELETE FROM article
 			WHERE id = #{id}
 			""")
 	public void doDeleteArticle(int id);
+
+	@Select("""
+			<script>
+				SELECT COUNT(*)
+				FROM article
+				WHERE memberId = #{memberId}
+				<if test='boardId != 0'>
+					AND boardId = #{boardId}
+				</if>
+			</script>
+			""")
+	public int getArticlesCnt(int memberId, int boardId);
 
 }

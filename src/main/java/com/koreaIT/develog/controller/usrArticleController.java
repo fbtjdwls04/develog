@@ -33,22 +33,36 @@ public class usrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model,int memberId, @RequestParam(defaultValue = "0") int boardId) {
+	public String showList(Model model,int memberId, @RequestParam(defaultValue = "0") int boardId, @RequestParam(defaultValue = "1") int boardPage) {
 		
 		Member member = memberService.getMemberById(memberId);
-		List<Article> articles = articleService.getArticlesByMemberIdAndBoardId(memberId, boardId); 
 		List<Board> boards = boardService.getBoardsByMemberId(memberId);
 		Board board = boardService.getBoardById(boardId);
 		
 		if(member == null) {
 			return rq.jsReturnOnView("잘못된 접근입니다.");
 		}
+		int pageSize = 10;
+		int itemsInAPage = 10;
+		int startLimit = (boardPage-1)*itemsInAPage;
+		int articleCnt = articleService.getArticlesCnt(memberId, boardId);
+		int totalPage = (int) Math.ceil((double) articleCnt / itemsInAPage);
+		int beginPage = Util.getBeginPage(boardPage, pageSize);
+		int endPage = Util.getEndPage(boardPage, pageSize);
+		
+		List<Article> articles = articleService.getArticles(memberId, boardId, startLimit, itemsInAPage); 
 		
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("memberId",member.getId());
 		model.addAttribute("articles",articles);
 		model.addAttribute("boards",boards);
 		model.addAttribute("board",board);
+		model.addAttribute("beginPage",beginPage);
+		model.addAttribute("endPage",endPage);
+		model.addAttribute("articleCnt",articleCnt);
+		model.addAttribute("totalPage",totalPage);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("boardPage", boardPage);
 		
 		return "/usr/article/list";
 	}
@@ -113,7 +127,7 @@ public class usrArticleController {
 			return Util.jsHistoryBack("권한이 없습니다");
 		}
 		
-		articleService.doWrite(rq.getLoginedMemberId(),boardId, title, body);
+		articleService.doWriteArticle(rq.getLoginedMemberId(),boardId, title, body);
 		
 		int id = articleService.getMyLastArticleId(rq.getLoginedMemberId());
 		
@@ -174,7 +188,7 @@ public class usrArticleController {
 			return Util.jsHistoryBack("권한이 없습니다");
 		}
 		
-		articleService.doModify(id,boardId, title, body);
+		articleService.doModifyArticle(id,boardId, title, body);
 		
 		return Util.jsReplace("글이 수정되었습니다", Util.f("detail?id=%d&memberId=%s", id, rq.getLoginedMemberId()));
 	}
