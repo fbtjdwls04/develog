@@ -12,10 +12,11 @@
    	
    	<section class="flex container min-h-[1000px] mx-auto border relative mt-[200px] text-[white] bg-[rgb(60,64,67)]">
    	
+   		<!-- 사이드 메뉴 -->
 		<%@ include file="../common/sideBoardList.jsp" %>   		
 		
-   		<nav class="flex-grow">
-   			<div class="flex items-center">
+   		<nav class="flex-grow p-10">
+   			<div class="flex items-center mb-4 text-2xl">
 	   			<c:if test="${board == null}">
 		   			<h1 class="p-2">전체글 리스트</h1>
 	   			</c:if>
@@ -26,26 +27,28 @@
 		   			<a href="write" class="btn btn-sm btn-outline ml-auto mr-[20px] btn-accent">글쓰기</a>
 	   			</c:if>
    			</div>
-	   		<ul>
+	   		<table class="table text-center">
 		   		<c:forEach var="article" items="${articles }">
-		   			<li class="border-b p-2 m-2">
-			   			<a href="detail?id=${article.id }&memberId=${memberId}" class="flex">
-			   				<span class="ml-[20px]">
-			   					[${article.boardName }]
-			   				</span>
-			   				<span class="ml-[20px]">
-			   					${article.title }
-			   				</span>
-			   				<span class="ml-auto">
-			   					${article.regDate }
-			   				</span>
-			   				<span class="ml-[20px]">
-			   					추천 수 : ${article.hitCount }
-			   				</span>
-			   			</a>
-		   			</li>
+		   			<tr class="border-b m-2 hover:bg-gray-500">
+		   				<td>
+		   					[${article.boardName }]
+		   				</td>
+		   				<td>
+				   			<a href="detail?id=${article.id }" class="flex p-2">
+				   				<span class="ml-[20px]">
+				   					${article.title }
+				   				</span>
+				   			</a>
+		   				</td>
+		   				<td>
+		   					${article.regDate }
+		   				</td>
+		   				<td>
+		   					추천수 : ${article.hitCount }
+		   				</td>
+		   			</tr>
 		   		</c:forEach>
-	  	 	</ul>
+	  	 	</table>
 	  	 	
 	  	 	<ul class="flex mt-[20px] justify-center items-center">
 	  	 		<!-- 페이지 처음 화살표 -->

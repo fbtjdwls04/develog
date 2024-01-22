@@ -11,12 +11,12 @@ import com.koreaIT.develog.vo.ResultData;
 import com.koreaIT.develog.vo.Rq;
 
 @Controller
-public class usrMemberController {
+public class UsrMemberController {
 	
 	private MemberService memberService;
 	private Rq rq;
 	
-	public usrMemberController(MemberService memberService, Rq rq) {
+	public UsrMemberController(MemberService memberService, Rq rq) {
 		this.memberService = memberService;
 		this.rq = rq;
 	}

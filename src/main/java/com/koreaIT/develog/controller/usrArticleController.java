@@ -11,24 +11,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.koreaIT.develog.service.ArticleService;
 import com.koreaIT.develog.service.BoardService;
 import com.koreaIT.develog.service.MemberService;
+import com.koreaIT.develog.service.ReplyService;
 import com.koreaIT.develog.util.Util;
 import com.koreaIT.develog.vo.Article;
 import com.koreaIT.develog.vo.Board;
 import com.koreaIT.develog.vo.Member;
+import com.koreaIT.develog.vo.Reply;
 import com.koreaIT.develog.vo.Rq;
 
 @Controller
-public class usrArticleController {
+public class UsrArticleController {
 	
 	private MemberService memberService;
 	private ArticleService articleService;
 	private BoardService boardService;
+	private ReplyService replyService;
 	private Rq rq;
 	
-	public usrArticleController(MemberService memberService, ArticleService articleService,BoardService boardService ,Rq rq) {
+	public UsrArticleController(MemberService memberService, ArticleService articleService,BoardService boardService ,ReplyService replyService,Rq rq) {
 		this.memberService = memberService;
 		this.articleService = articleService;
 		this.boardService = boardService;
+		this.replyService = replyService;
 		this.rq = rq;
 	}
 	
@@ -42,8 +46,9 @@ public class usrArticleController {
 		if(member == null) {
 			return rq.jsReturnOnView("잘못된 접근입니다.");
 		}
+		
 		int pageSize = 10;
-		int itemsInAPage = 10;
+		int itemsInAPage = 15;
 		int startLimit = (boardPage-1)*itemsInAPage;
 		int articleCnt = articleService.getArticlesCnt(memberId, boardId);
 		int totalPage = (int) Math.ceil((double) articleCnt / itemsInAPage);
@@ -68,29 +73,31 @@ public class usrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(Model model, int id, int memberId) {
+	public String showDetail(Model model, int id) {
 		
-		Member member = memberService.getMemberById(memberId);
 		Article article = articleService.getArticleById(id);
-		List<Board> boards = boardService.getBoardsByMemberId(memberId);
+		
+		if(article == null) {
+			return rq.jsReturnOnView("잘못된 접근입니다.");
+		}
+		
+		Member member = memberService.getMemberById(article.getMemberId());
 		
 		if(member == null) {
 			return rq.jsReturnOnView("잘못된 접근입니다.");
 		}
-		if(article == null) {
-			return rq.jsReturnOnView("잘못된 접근입니다.");
-		}
-		if(article.getMemberId() != memberId) {
-			return rq.jsReturnOnView("잘못된 접근입니다.");
-		}
+		
+		List<Board> boards = boardService.getBoardsByMemberId(article.getMemberId());
 		
 		Board board = boardService.getBoardById(article.getBoardId());
+		List<Reply> replies = replyService.getReplies(id); 
 		
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("memberId",member.getId());
 		model.addAttribute("article",article);
 		model.addAttribute("boards",boards);
 		model.addAttribute("boardName",board.getName());
+		model.addAttribute("replies",replies);
 		
 		return "/usr/article/detail";
 	}

@@ -8,7 +8,7 @@
 		<ul class="border h-full p-2">
 			<li class="mb-4"><a href="list?memberId=${memberId}">전체 글 보기</a></li>
 			<c:forEach var="board" items="${boards }">
-				<li><a
+				<li class="hover:underline"><a
 					href="list?memberId=${board.memberId }&boardId=${board.id } ">${board.name }</a></li>
 			</c:forEach>
 		</ul>
