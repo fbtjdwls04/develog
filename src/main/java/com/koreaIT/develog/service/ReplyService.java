@@ -31,6 +31,10 @@ public class ReplyService {
 	public void doDelete(int id) {
 		replyDao.doDelete(id);
 	}
+
+	public void doModify(int id, String body) {
+		replyDao.doModify(id, body);
+	}
 	
 	
 }

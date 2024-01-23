@@ -44,6 +44,8 @@ public class UsrReplyController {
 			return Util.jsHistoryBack("내용을 입력해주세요");
 		}
 		
+		body = Util.cleanText(body);
+		
 		replyService.doWrite(articleId, rq.getLoginedMemberId(),body);
 		
 		return Util.jsReplace("댓글이 작성되었습니다", Util.f("/usr/article/detail?id=%d", articleId));
@@ -66,5 +68,30 @@ public class UsrReplyController {
 		replyService.doDelete(id);
 		
 		return Util.jsReplace("댓글이 삭제되었습니다", Util.f("/usr/article/detail?id=%d", reply.getArticleId()));
+	}	
+	
+	@RequestMapping("/usr/reply/doModify")
+	@ResponseBody
+	public String doModify(int id, String body) {
+		
+		Reply reply = replyService.getReply(id);
+		
+		if(reply == null) {
+			return Util.jsHistoryBack("잘못된 접근입니다");
+		}
+		
+		if(Util.empty(body)) {
+			return Util.jsHistoryBack("내용을 입력해주세요");
+		}
+		
+		if(reply.getMemberId() != rq.getLoginedMemberId()) {
+			return Util.jsHistoryBack("권한이 없습니다");
+		}
+		
+		body = Util.cleanText(body);
+		
+		replyService.doModify(id, body);
+		
+		return Util.jsReplace("댓글이 수정되었습니다", Util.f("/usr/article/detail?id=%d", reply.getArticleId()));
 	}	
 }

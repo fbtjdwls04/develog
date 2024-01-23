@@ -38,6 +38,9 @@ public class UsrMemberController {
 			return Util.jsHistoryBack("비밀번호를 입력해주세요");
 		}
 		
+		loginId = Util.cleanText(loginId);
+		loginPw = Util.cleanText(loginPw);
+		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if(member.getLoginPw().equals(Util.sha256(loginPw)) == false) {
@@ -86,6 +89,13 @@ public class UsrMemberController {
 			return Util.jsHistoryBack("이메일 입력해주세요");
 		}
 		
+		loginId = Util.cleanText(loginId);
+		loginPw = Util.cleanText(loginPw);
+		name = Util.cleanText(name);
+		nickname = Util.cleanText(nickname);
+		cellphoneNum = Util.cleanText(cellphoneNum);
+		email = Util.cleanText(email);
+		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if(member != null) {
@@ -101,9 +111,12 @@ public class UsrMemberController {
 	@ResponseBody
 	public ResultData loginIdDupChk(String loginId) {
 		
+		
 		if(Util.empty(loginId)) {
 			return ResultData.from("F-1", "아이디를 입력해주세요");
 		}
+		
+		loginId = Util.cleanText(loginId);
 		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
@@ -125,6 +138,9 @@ public class UsrMemberController {
 		if(Util.empty(loginPw)) {
 			return ResultData.from("F-2", "비밀번호를 입력해주세요");
 		}
+		
+		loginId = Util.cleanText(loginId);
+		loginPw = Util.cleanText(loginPw);
 		
 		Member member = memberService.getMemberByLoginId(loginId);
 		

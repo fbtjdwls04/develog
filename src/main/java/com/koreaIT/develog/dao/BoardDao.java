@@ -11,13 +11,13 @@ import com.koreaIT.develog.vo.Board;
 public interface BoardDao {
 	@Select("""
 			SELECT * FROM board
-			WHERE memberId = #{memberId}
+				WHERE memberId = #{memberId}
 		""")
 	public List<Board> getBoardsByMemberId(int memberId);
 
 	@Select("""
 			SELECT * FROM board
-			WHERE id = #{boardId}
+				WHERE id = #{boardId}
 		""")
 	public Board getBoardById(int boardId);
 }

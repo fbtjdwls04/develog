@@ -11,7 +11,7 @@
    	</div>
    	
    	<script>
-   		function replySubmit(e){
+   		const replySubmit = function(e){
    			
 			e.body.value = e.body.value.trim();
 			
@@ -22,6 +22,34 @@
 			
 			e.submit();
    		}
+   		
+   		const replyModifySubmit = function(e) {
+   			
+			e.body.value = e.body.value.trim();
+			
+			if(e.body.value.length == 0){
+				alert("내용을 입력해주세요");
+				return;
+			}
+			
+			e.submit();
+		}
+   		
+   		const replyModify_getForm = function(id) {
+   			/* 해당 댓글을 제외한 나머지는 댓글만 보이게 (수정 입력칸 여러개 안켜지게) */
+			$('.reply').css("display", "flex");
+			$('.replyModifyForm').hide();
+			/*  */
+			
+			$('#reply' + id).hide();
+			$('#replyModifyForm' + id).css("display", "flex");
+		}
+   		
+   		/* 수정 입력칸 닫기 */
+		const replyModifyForm_cancle = function(id) {
+			$('#reply' + id).css("display", "flex");
+			$('#replyModifyForm' + id).hide();
+		}
    	</script>
    	
    	<section class="flex container min-h-[1000px] mx-auto border relative mt-[200px] text-[white] bg-[rgb(60,64,67)]">
@@ -40,6 +68,11 @@
 				</span>
 				&nbsp;
 				<span>${article.updateDate.substring(2,16) }</span>
+				<c:if test="${article.regDate != article.updateDate }">
+					<span class="text-[gray]">
+						(수정됨)
+					</span>
+				</c:if>
 				&nbsp;
 				<span>조회 ${article.hitCount }</span>
 				&nbsp;
@@ -56,34 +89,59 @@
 				</button>
 			</div>
 			<hr />
+			<!-- 댓글창 -->
 			<div class="my-4">
 				<p class="my-4">댓글 ${replies.size() }</p>
-				<div>
-					<c:forEach var="reply" items="${replies }">
-						<div class="flex items-center">
-							<div class="w-[100px]">${reply.writerName }</div>
+				<c:forEach var="reply" items="${replies }">
+					<div class="my-4">
+						<div id="reply${reply.id }" class="flex items-center reply">
+							<div class="w-[100px] font-bold">${reply.writerName }</div>
 							<div>
-								${reply.body }
+								<p>
+									${reply.body }
+								</p>
+								<p class="text-[14px] text-[gray]">
+									${reply.updateDate }
+									<c:if test="${article.regDate != article.updateDate }">
+										<span>
+											(수정됨)
+										</span>
+									</c:if>
+								</p>
 							</div>
+							<!-- 댓글 수정 삭제 버튼 -->
 							<c:if test="${reply.memberId == rq.getLoginedMemberId() }">
 								<div class="dropdown dropdown-end ml-auto">
 								  <div tabindex="0" role="button">
 								  	<i class="fa-solid fa-ellipsis-vertical p-2"></i>
 								  </div>
 								  <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box text-black w-20">
-								    <li><a>수정</a></li>
+								    <li><button onclick="replyModify_getForm(${reply.id})">수정</button></li>
 								    <li><a href="/usr/reply/doDelete?id=${reply.id }" onclick="if(confirm('정말 삭제하시겠습니까?')== false) return false;">삭제</a></li>
 								  </ul>
 								</div>
 							</c:if>
 						</div>
-					</c:forEach>
-				</div>
-				<form action="/usr/reply/doWrite" onsubmit="replySubmit(this); return false;" class="flex mt-4">
-					<input type="hidden" name="articleId" value="${article.id}"/>
-					<input name="body" type="text" placeholder="댓글을 입력해주세요" class="input input-outline flex-grow text-black"/>
-					<button class="btn btn-accent">작성</button>
-				</form>
+						<!-- 댓글 수정창 -->
+						<form id="replyModifyForm${reply.id }" action="/usr/reply/doModify" onsubmit="replyModifySubmit(this); return false;" class="mt-4 hidden replyModifyForm">
+							<input type="hidden" name="id" value="${reply.id}"/>
+							<input name="body" type="text" placeholder="댓글을 입력해주세요" class="input input-outline flex-grow text-black" value="${reply.body }"/>
+							<button class="btn btn-accent">수정</button>
+							<button class="btn btn-accent" type="button" onclick="replyModifyForm_cancle(${reply.id})">취소</button>
+						</form>
+					</div>
+				</c:forEach>
+				<!-- 댓글 입력창 -->
+				<c:if test="${rq.getLoginedMemberId() != 0 }">
+					<form action="/usr/reply/doWrite" onsubmit="replySubmit(this); return false;" class="flex mt-4">
+						<input type="hidden" name="articleId" value="${article.id}"/>
+						<input name="body" type="text" placeholder="댓글을 입력해주세요" class="input input-outline flex-grow text-black"/>
+						<button class="btn btn-accent">작성</button>
+					</form>
+				</c:if>
+				<c:if test="${rq.getLoginedMemberId() == 0 }">
+					<div class="mt-4">댓글은 로그인 후 이용이 가능합니다</div>
+				</c:if>
 			</div>
 		</div>
    	</section>

@@ -64,7 +64,7 @@ public class Util {
 	public static String cleanText(String text) {
 		return text.replaceAll("&", "&amp;")
                 .replaceAll("<", "&lt;")
-                .replaceAll(">", "&gt;");
+                .replaceAll(">", "&gt;").trim();
 	}
 
 	public static String createTempPassword() {

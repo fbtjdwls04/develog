@@ -35,13 +35,23 @@
 		   				</td>
 		   				<td>
 				   			<a href="detail?id=${article.id }" class="flex p-2">
-				   				<span class="ml-[20px]">
+				   				<span class="ml-[20px] hover:underline">
 				   					${article.title }
 				   				</span>
+				   				<c:if test="${article.replyCnt > 0 }">
+					   				<span class="text-[red] ml-2">
+					   					[${article.replyCnt}]
+					   				</span>
+				   				</c:if>
 				   			</a>
 		   				</td>
 		   				<td>
-		   					${article.regDate }
+		   					${article.updateDate.substring(2,16) }
+		   					<c:if test="${article.regDate != article.updateDate }">
+								<span class="text-[gray]">
+									(수정됨)
+								</span>
+							</c:if>
 		   				</td>
 		   				<td>
 		   					추천수 : ${article.hitCount }
