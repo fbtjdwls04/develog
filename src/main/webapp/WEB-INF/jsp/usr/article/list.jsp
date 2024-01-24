@@ -10,18 +10,18 @@
    		class="w-full opacity-80" />
    	</div>
    	
-   	<section class="flex container min-h-[1000px] mx-auto border relative mt-[200px] text-[white] bg-[rgb(60,64,67)]">
+   	<section class="flex container min-h-[1300px] mx-auto relative mt-[200px]">
    	
    		<!-- 사이드 메뉴 -->
 		<%@ include file="../common/sideBoardList.jsp" %>   		
 		
    		<nav class="flex-grow p-10">
    			<div class="flex items-center mb-4 text-2xl">
-	   			<c:if test="${board == null}">
+	   			<c:if test="${nowBoard == null}">
 		   			<h1 class="p-2">전체글 리스트</h1>
 	   			</c:if>
-	   			<c:if test="${board.id != 0 }">
-		   			<h1 class="p-2">${board.name }</h1>
+	   			<c:if test="${nowBoard.id != 0 }">
+		   			<h1 class="p-2">${nowBoard.name }</h1>
 	   			</c:if>
 	   			<c:if test="${rq.getLoginedMemberId() == memberId }">
 		   			<a href="write" class="btn btn-sm btn-outline ml-auto mr-[20px] btn-accent">글쓰기</a>
@@ -29,7 +29,7 @@
    			</div>
 	   		<table class="table text-center">
 		   		<c:forEach var="article" items="${articles }">
-		   			<tr class="border-b m-2 hover:bg-gray-500">
+		   			<tr class="border-b m-2 hover:bg-gray-200">
 		   				<td>
 		   					[${article.boardName }]
 		   				</td>
@@ -60,11 +60,11 @@
 		   		</c:forEach>
 	  	 	</table>
 	  	 	
-	  	 	<ul class="flex mt-[20px] justify-center items-center">
+	  	 	<ul class="flex mt-[40px] justify-center items-center">
 	  	 		<!-- 페이지 처음 화살표 -->
  				<c:if test="${beginPage > pageSize}">
 					<a class="text-[20px] mx-6"
-						href="list?memberId=${memberId }&boardId=${board.id}"> 
+						href="list?memberId=${memberId }&boardId=${nowBoard.id}"> 
 						<i class="fa-solid fa-backward flex items-center"></i>
 					</a>
 				</c:if>
@@ -72,7 +72,7 @@
 	  	 		<!-- 이전 화살표 -->
 	  	 		<c:if test="${beginPage > 1}">
 					<a class="flex justify-center items-center"
-						href="list?memberId=${memberId }&boardId=${board.id}&boardPage=${beginPage-pageSize}">
+						href="list?memberId=${memberId }&boardId=${nowBoard.id}&boardPage=${beginPage-pageSize}">
 						<i class="fa-solid fa-caret-left text-2xl"></i> <span>이전 | </span>
 					</a>
 				</c:if>
@@ -81,7 +81,7 @@
 	  	 		<c:forEach begin="${beginPage }" end="${endPage }" step="1" var="i">
 	  	 			<c:if test="${i <= totalPage }">
 		  	 			<li class="mx-2 ${i == boardPage ? 'text-2xl' : ''}">
-		  	 				<a href="list?memberId=${memberId }&boardId=${board.id}&boardPage=${i}">
+		  	 				<a href="list?memberId=${memberId }&boardId=${nowBoard.id}&boardPage=${i}">
 		  	 					${i }
 		  	 				</a>
 		  	 			</li>
@@ -91,7 +91,7 @@
 	  	 		<!-- 다음 화살표 -->
 	  	 		<c:if test="${endPage < totalPage }">
 					<a class="flex justify-center items-center"
-						href="list?memberId=${memberId }&boardId=${board.id}&boardPage=${beginPage+pageSize}">
+						href="list?memberId=${memberId }&boardId=${nowBoard.id}&boardPage=${beginPage+pageSize}">
 						<span> | 다음</span> <i class="fa-solid fa-caret-right text-2xl"></i>
 					</a>
 				</c:if>
@@ -99,7 +99,7 @@
 				<!-- 페이지 끝 화살표 -->
 				<c:if test="${beginPage + pageSize <= totalPage }">
 					<a class="text-[20px] mx-6"
-						href="list?memberId=${memberId }&boardId=${board.id}&boardPage=${totalPage}">
+						href="list?memberId=${memberId }&boardId=${nowBoard.id}&boardPage=${totalPage}">
 						<i class="fa-solid fa-forward flex items-center"></i>
 					</a>
 				</c:if>

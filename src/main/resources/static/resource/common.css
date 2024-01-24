@@ -11,4 +11,8 @@ html > body {
 	text-underline-position: under;
 } 
 
-
+section {
+	background-color: whitesmoke;
+	border-radius: 20px;
+	overflow: hidden;
+}

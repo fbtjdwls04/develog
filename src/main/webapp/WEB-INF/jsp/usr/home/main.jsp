@@ -12,12 +12,12 @@
    		class="w-full opacity-80" />
    	</div>
    	
-   	<section class="container mx-auto relative mt-[200px] text-[white]">
+   	<div class="container mx-auto relative mt-[200px] text-[white]">
    		<h1 class="text-center text-[100px] font-bold select-none">
 			DEVELOG
    		</h1>
    		
-   	</section>
+   	</div>
 	
 	<%@ include file="../common/foot.jsp" %>
 	

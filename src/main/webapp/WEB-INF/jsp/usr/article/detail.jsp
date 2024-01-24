@@ -37,6 +37,7 @@
    		
    		const replyModify_getForm = function(id) {
    			/* 해당 댓글을 제외한 나머지는 댓글만 보이게 (수정 입력칸 여러개 안켜지게) */
+   			
 			$('.reply').css("display", "flex");
 			$('.replyModifyForm').hide();
 			/*  */
@@ -52,14 +53,14 @@
 		}
    	</script>
    	
-   	<section class="flex container min-h-[1000px] mx-auto border relative mt-[200px] text-[white] bg-[rgb(60,64,67)]">
+   	<section class="flex container min-h-[1000px] mx-auto relative mt-[200px]">
  	
  	 	<!-- 사이드 메뉴 -->
    		<%@ include file="../common/sideBoardList.jsp" %>  
-   		
-   		<div class="break-words p-10 flex-grow" >
-   			<div class="p-4 border-b">
-				<a href="list?memberId=${article.memberId}&boardId=${article.boardId }">[${boardName }]</a>
+   		<!-- 사이드 메뉴 끝 -->
+   		<div class="break-words flex-grow" >
+   			<div class="border-b px-10 py-20 bg-gray-200">
+				<a href="list?memberId=${article.memberId}&boardId=${article.boardId }">[${nowBoard.name }]</a>
 				<p class="text-bold text-3xl" >${article.title }</p>
 				<br />
 				<span class="text-base font-bold">
@@ -78,22 +79,26 @@
 				&nbsp;
 				<span>추천 ${article.point}</span>
    			</div>
-					
-			<div id="viewer" class="p-[50px]">
-				${article.body }
+			<div class="h-[50px]">
+				<hr />
 			</div>
-			<div class="my-4">
+			<div class="bg-gray-100 p-10">
+				<div id="viewer" class="p-[50px]">
+					${article.body }
+				</div>
+			</div>
+			<div class="m-4">
 				<a href="modify?id=${article.id }" class="btn btn-sm btn-outline btn-accent">수정</a>
 				<button class="btn btn-sm btn-outline btn-accent" onclick="if(confirm('게시글을 삭제하시겠습니까?')) location.replace('doDelete?id=${article.id}');">
 					삭제
 				</button>
-			</div>
+			</div>					
 			<hr />
 			<!-- 댓글창 -->
-			<div class="my-4">
-				<p class="my-4">댓글 ${replies.size() }</p>
+			<div class="m-4 mb-20">
+				<p class="m-4">댓글 ${replies.size() }</p>
 				<c:forEach var="reply" items="${replies }">
-					<div class="my-4">
+					<div class="m-4">
 						<div id="reply${reply.id }" class="flex items-center reply">
 							<div class="w-[100px] font-bold">${reply.writerName }</div>
 							<div>
@@ -127,20 +132,20 @@
 							<input type="hidden" name="id" value="${reply.id}"/>
 							<input name="body" type="text" placeholder="댓글을 입력해주세요" class="input input-outline flex-grow text-black" value="${reply.body }"/>
 							<button class="btn btn-accent">수정</button>
-							<button class="btn btn-accent" type="button" onclick="replyModifyForm_cancle(${reply.id})">취소</button>
+							<button class="btn btn-error bg-[pink]" type="button" onclick="replyModifyForm_cancle(${reply.id})">취소</button>
 						</form>
 					</div>
 				</c:forEach>
 				<!-- 댓글 입력창 -->
 				<c:if test="${rq.getLoginedMemberId() != 0 }">
-					<form action="/usr/reply/doWrite" onsubmit="replySubmit(this); return false;" class="flex mt-4">
+					<form action="/usr/reply/doWrite" onsubmit="replySubmit(this); return false;" class="flex m-4">
 						<input type="hidden" name="articleId" value="${article.id}"/>
 						<input name="body" type="text" placeholder="댓글을 입력해주세요" class="input input-outline flex-grow text-black"/>
 						<button class="btn btn-accent">작성</button>
 					</form>
 				</c:if>
 				<c:if test="${rq.getLoginedMemberId() == 0 }">
-					<div class="mt-4">댓글은 로그인 후 이용이 가능합니다</div>
+					<div class="m-4">댓글은 로그인 후 이용이 가능합니다</div>
 				</c:if>
 			</div>
 		</div>

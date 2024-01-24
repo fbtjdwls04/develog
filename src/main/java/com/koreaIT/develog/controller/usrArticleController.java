@@ -59,9 +59,10 @@ public class UsrArticleController {
 		
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("memberId",member.getId());
+		model.addAttribute("profillImg",member.getProfillImg());
 		model.addAttribute("articles",articles);
 		model.addAttribute("boards",boards);
-		model.addAttribute("board",board);
+		model.addAttribute("nowBoard",board);
 		model.addAttribute("beginPage",beginPage);
 		model.addAttribute("endPage",endPage);
 		model.addAttribute("articleCnt",articleCnt);
@@ -94,9 +95,10 @@ public class UsrArticleController {
 		
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("memberId",member.getId());
+		model.addAttribute("profillImg",member.getProfillImg());
 		model.addAttribute("article",article);
 		model.addAttribute("boards",boards);
-		model.addAttribute("boardName",board.getName());
+		model.addAttribute("nowBoard",board);
 		model.addAttribute("replies",replies);
 		
 		return "/usr/article/detail";

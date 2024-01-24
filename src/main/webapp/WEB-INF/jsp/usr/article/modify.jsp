@@ -12,7 +12,7 @@
    		class="w-full opacity-80" />
    	</div>
    	
-   	<section class="flex container min-h-[1000px] mx-auto border relative mt-[200px] bg-[rgb(60,64,67)]">
+   	<section class="flex container min-h-[1000px] mx-auto relative mt-[200px]">
    		<form action="doModify" onsubmit="submitForm(this); return false;">
    			<select class="select w-full max-w-xs" name="boardId">
 			  <option disabled value="0">게시판을 선택해주세요</option>

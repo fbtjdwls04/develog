@@ -20,4 +20,5 @@ public class Member {
 	private String email;
 	private String delStatus;
 	private String delDate;
+	private String profillImg;
 }
