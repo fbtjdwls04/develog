@@ -65,7 +65,7 @@
 				<br />
 				<span class="text-base font-bold">
 					<i class="fa-regular fa-user"></i>
-					${nickname}
+					${member.nickname}
 				</span>
 				&nbsp;
 				<span>${article.updateDate.substring(2,16) }</span>

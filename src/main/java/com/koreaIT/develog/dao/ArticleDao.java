@@ -22,19 +22,31 @@ public interface ArticleDao {
 				FROM board AS b
 				INNER JOIN article AS a
 				ON b.id = a.boardId
-				AND a.memberId = #{memberId}
-				<if test='boardId != 0'>
-					AND a.boardId = #{boardId}
-				</if>
 				LEFT JOIN reply AS r
 				ON r.articleId = a.id
+				WHERE b.memberId = #{memberId}
+				 	<if test='boardId != 0'>
+				 		AND b.id = #{boardId}
+				 	</if>
+				 	<if test='searchCode == "title"'>
+				 		AND a.title LIKE CONCAT('%',#{searchMsg},'%')
+				 	</if>
+				 	<if test='searchCode == "body"'>
+				 		AND a.body LIKE CONCAT('%',#{searchMsg},'%')
+				 	</if>
+				 	<if test='searchCode == "titleOrBody"'>
+				 		AND (
+					 		a.title LIKE CONCAT('%',#{searchMsg},'%')
+					 		OR a.body LIKE CONCAT('%',#{searchMsg},'%')
+				 		)
+			 		</if>
 				GROUP BY a.id
 				ORDER BY a.id DESC
 				LIMIT #{startLimit}, #{itemsInAPage}
 
 			</script>
 			""")
-	public List<Article> getArticles(int memberId, int boardId, int startLimit, int itemsInAPage);
+	public List<Article> getArticles(int memberId, int boardId, int startLimit, int itemsInAPage, String searchCode, String searchMsg);
 
 	@Select("""
 			SELECT * FROM article
@@ -80,13 +92,37 @@ public interface ArticleDao {
 	@Select("""
 			<script>
 				SELECT COUNT(*)
-					FROM article
-					WHERE memberId = #{memberId}
+					FROM article AS a
+					INNER JOIN board AS b
+					ON b.id = a.boardId
+					WHERE b.memberId = #{memberId}
 					<if test='boardId != 0'>
-						AND boardId = #{boardId}
+						AND b.id = #{boardId}
 					</if>
+					<if test='searchCode == "title"'>
+				 		AND a.title LIKE CONCAT('%',#{searchMsg},'%')
+				 	</if>
+				 	<if test='searchCode == "body"'>
+				 		AND a.body LIKE CONCAT('%',#{searchMsg},'%')
+				 	</if>
+				 	<if test='searchCode == "titleOrBody"'>
+				 		AND (
+					 		a.title LIKE CONCAT('%',#{searchMsg},'%')
+					 		OR a.body LIKE CONCAT('%',#{searchMsg},'%')
+				 		)
+			 		</if>
 			</script>
 			""")
-	public int getArticlesCnt(int memberId, int boardId);
+	public int getArticlesCnt(int memberId, int boardId, String searchCode, String searchMsg);
+
+	@Select("""
+			SELECT * FROM 
+				article AS a
+				INNER JOIN board AS b
+				ON a.boardId = b.id
+				ORDER BY a.id DESC
+				LIMIT 15
+			""")
+	public List<Article> getAllArticles();
 
 }

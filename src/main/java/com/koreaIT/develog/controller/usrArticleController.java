@@ -28,7 +28,13 @@ public class UsrArticleController {
 	private ReplyService replyService;
 	private Rq rq;
 	
-	public UsrArticleController(MemberService memberService, ArticleService articleService,BoardService boardService ,ReplyService replyService,Rq rq) {
+	public UsrArticleController(
+			MemberService memberService
+			, ArticleService articleService
+			, BoardService boardService 
+			, ReplyService replyService
+			, Rq rq) {
+		
 		this.memberService = memberService;
 		this.articleService = articleService;
 		this.boardService = boardService;
@@ -37,7 +43,13 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model,int memberId, @RequestParam(defaultValue = "0") int boardId, @RequestParam(defaultValue = "1") int boardPage) {
+	public String showList(
+			Model model
+			, int memberId
+			, @RequestParam(defaultValue = "0") int boardId
+			, @RequestParam(defaultValue = "1") int boardPage
+			, String searchCode
+			, String searchMsg) {
 		
 		Member member = memberService.getMemberById(memberId);
 		List<Board> boards = boardService.getBoardsByMemberId(memberId);
@@ -47,19 +59,23 @@ public class UsrArticleController {
 			return rq.jsReturnOnView("잘못된 접근입니다.");
 		}
 		
+		member.setLoginPw(null);
+		
+		if(searchMsg != null) {
+			searchMsg = Util.cleanText(searchMsg);
+		}
+		
 		int pageSize = 10;
 		int itemsInAPage = 15;
 		int startLimit = (boardPage-1)*itemsInAPage;
-		int articleCnt = articleService.getArticlesCnt(memberId, boardId);
+		int articleCnt = articleService.getArticlesCnt(memberId, boardId, searchCode, searchMsg);
 		int totalPage = (int) Math.ceil((double) articleCnt / itemsInAPage);
 		int beginPage = Util.getBeginPage(boardPage, pageSize);
 		int endPage = Util.getEndPage(boardPage, pageSize);
 		
-		List<Article> articles = articleService.getArticles(memberId, boardId, startLimit, itemsInAPage); 
+		List<Article> articles = articleService.getArticles(memberId, boardId, startLimit, itemsInAPage, searchCode, searchMsg); 
 		
-		model.addAttribute("nickname",member.getNickname());
-		model.addAttribute("memberId",member.getId());
-		model.addAttribute("profillImg",member.getProfillImg());
+		model.addAttribute("member",member);
 		model.addAttribute("articles",articles);
 		model.addAttribute("boards",boards);
 		model.addAttribute("nowBoard",board);
@@ -69,6 +85,8 @@ public class UsrArticleController {
 		model.addAttribute("totalPage",totalPage);
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("boardPage", boardPage);
+		model.addAttribute("searchCode", searchCode);
+		model.addAttribute("searchMsg", searchMsg);
 		
 		return "/usr/article/list";
 	}
@@ -88,14 +106,14 @@ public class UsrArticleController {
 			return rq.jsReturnOnView("잘못된 접근입니다.");
 		}
 		
+		member.setLoginPw(null);
+		
 		List<Board> boards = boardService.getBoardsByMemberId(article.getMemberId());
 		
 		Board board = boardService.getBoardById(article.getBoardId());
 		List<Reply> replies = replyService.getReplies(id); 
 		
-		model.addAttribute("nickname",member.getNickname());
-		model.addAttribute("memberId",member.getId());
-		model.addAttribute("profillImg",member.getProfillImg());
+		model.addAttribute("member",member);
 		model.addAttribute("article",article);
 		model.addAttribute("boards",boards);
 		model.addAttribute("nowBoard",board);

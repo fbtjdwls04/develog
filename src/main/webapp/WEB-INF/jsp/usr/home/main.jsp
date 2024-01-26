@@ -16,7 +16,18 @@
    		<h1 class="text-center text-[100px] font-bold select-none">
 			DEVELOG
    		</h1>
-   		
+   		<nav class="mt-20 flex justify-center h-[600px]">
+   			<ul class="flex flex-col items-center border p-4 rounded-[20px] bg-gray-700 overflow-y-scroll">
+	   			<c:forEach var="article" items="${articles }">
+	   				<li class="w-[800px] text-center border bg-[rgb(20,20,20)] my-2 rounded-[20px]">
+	   					<a href="/usr/article/detail?id=${article.id }" class="flex flex-col justify-center">
+	   						<div class="text-2xl text-bold">${article.title }</div>
+	   						<div class="max-h-[50px] min-h-[50px] truncate">${article.body }</div>
+	   					</a>
+	   				</li>
+	   			</c:forEach>
+   			</ul>
+   		</nav>
    	</div>
 	
 	<%@ include file="../common/foot.jsp" %>
