@@ -124,5 +124,12 @@ public interface ArticleDao {
 				LIMIT 15
 			""")
 	public List<Article> getAllArticles();
+	
+	@Update("""
+			UPDATE article
+			SET hitCount = hitCount + 1
+			WHERE id = #{id}
+			""")
+	public void increaseHitCount(int id);
 
 }

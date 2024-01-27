@@ -18,24 +18,33 @@
    		<nav class="flex-grow p-10">
    			<div class="flex items-center mb-4 text-2xl">
 	   			<c:if test="${nowBoard == null}">
-		   			<h1 class="p-2">전체글 리스트</h1>
+		   			<h1 class="p-2">전체글 리스트 </h1>
 	   			</c:if>
 	   			<c:if test="${nowBoard.id != 0 }">
 		   			<h1 class="p-2">${nowBoard.name }</h1>
 	   			</c:if>
+	   			<span class="text-[13px]">${articleCnt }</span>
 	   			<c:if test="${rq.getLoginedMemberId() == member.id }">
 		   			<a href="write" class="btn btn-sm btn-outline ml-auto mr-[20px] btn-accent">글쓰기</a>
 	   			</c:if>
    			</div>
-	   		<table class="table text-center">
+	   		<table class="table table-fiexd">
+	   			<tr>
+	   				<th width="500">
+	   					<span class="ml-[30px]">
+		   					제목
+	   					</span>
+	   				</th>
+	   				<th width="200">날짜</th>
+	   				<th width="100">조회수</th>
+	   				<th width="100">추천수</th>
+	   			</tr>
 		   		<c:forEach var="article" items="${articles }">
-		   			<tr class="border-b m-2 hover:bg-gray-200">
-		   				<td>
-		   					[${article.boardName }]
-		   				</td>
+		   			<tr class="border-b hover:bg-gray-200">
 		   				<td>
 				   			<a href="detail?id=${article.id }" class="flex p-2">
 				   				<span class="ml-[20px] hover:underline">
+				   					[${article.boardName }] &nbsp;
 				   					${article.title }
 				   				</span>
 				   				<c:if test="${article.replyCnt > 0 }">
@@ -52,6 +61,9 @@
 									(수정됨)
 								</span>
 							</c:if>
+		   				</td>
+		   				<td>
+		   					조회수 : ${article.hitCount }
 		   				</td>
 		   				<td>
 		   					추천수 : ${article.hitCount }

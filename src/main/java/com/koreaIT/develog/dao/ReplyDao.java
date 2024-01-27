@@ -15,7 +15,8 @@ public interface ReplyDao {
 
 	@Select("""
 			SELECT r.*
-				,m.nickname AS writerName 
+				,m.nickname AS writerName
+				,m.profillImg AS profillImg 
 			FROM reply AS r
 			INNER JOIN member AS m
 			WHERE r.memberId = m.id

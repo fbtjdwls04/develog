@@ -17,4 +17,5 @@ public class Reply {
 	
 //	member join
 	private String writerName;
+	private String profillImg;
 }

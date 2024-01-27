@@ -12,19 +12,20 @@
    		class="w-full opacity-80" />
    	</div>
    	
-   	<section class="flex container min-h-[1000px] mx-auto relative mt-[200px]">
-   		<form action="doWrite" onsubmit="submitForm(this); return false;">
-   			<select class="select w-full max-w-xs" name="boardId">
-			  <option disabled selected value="0">게시판을 선택해주세요</option>
-			  <c:forEach var="board" items="${boards }">
-			  	<option value="${board.id }">${board.name }</option>
-			  </c:forEach>
-			</select>
-			<br />
-   			<input type="text" name="title" class="input input-outline w-full" placeholder="제목을 입력해주세요"/>
+   	<section class="flex container min-h-[1000px] mx-auto relative mt-[200px] justify-center items-center">
+   		<form action="doWrite" onsubmit="submitForm(this); return false;" class="flex flex-col">
+   			<div class="flex">
+	   			<select class="select max-w-xs" name="boardId" data-value="${article.boardId }">
+				  <option disabled value="0">게시판을 선택해주세요</option>
+				  <c:forEach var="board" items="${boards }">
+				  	<option value="${board.id }">${board.name }</option>
+				  </c:forEach>
+				</select>
+	   			<input type="text" name="title" class="input input-outline input-bordered flex-grow" placeholder="제목을 입력해주세요" value="${article.title }"/>
+   			</div>
    			<input type="hidden" name="body"/>
    			<div id="editor" class="bg-white"></div>
-   			<button class="btn ml-auto">작성</button>
+   			<button class="btn btn-accent ml-auto">작성</button>
    		</form>
    	</section>
 	

@@ -34,6 +34,7 @@
 	const editor = new Editor({
 	    el: document.querySelector('#editor'),
 	    previewStyle: 'vertical',
-	    height: '500px'
+	    height: '500px',
+	    initialEditType : 'wysiwyg'
 	});
 </script>
