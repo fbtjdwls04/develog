@@ -100,6 +100,7 @@ public class UsrArticleController {
 		
 		Cookie oldCookie = null;
 		Cookie[] cookies = req.getCookies();
+		int coolTime = 60*60*24;
 		
 		if(cookies != null) {
 			for(Cookie cookie : cookies) {
@@ -114,29 +115,24 @@ public class UsrArticleController {
 				articleService.increaseHitCount(id);
 				oldCookie.setValue(oldCookie.getValue() + "_[" + id +"]");
 				oldCookie.setPath("/");
-				oldCookie.setMaxAge(5);
+				oldCookie.setMaxAge(coolTime);
 				res.addCookie(oldCookie);
 			}
 		}else {
 			articleService.increaseHitCount(id);
 			Cookie newCookie = new Cookie("hitCount", "[" + id + "]");
 			newCookie.setPath("/");
-			newCookie.setMaxAge(5);
+			newCookie.setMaxAge(coolTime);
 			res.addCookie(newCookie);
 		}
 		
-		Article article = articleService.getArticleById(id);
+		Article article = articleService.forPrintArticle(id);
 		
 		if(article == null) {
 			return rq.jsReturnOnView("잘못된 접근입니다.");
 		}
 		
-		Member member = memberService.getMemberById(article.getMemberId());
-		
-		if(member == null) {
-			return rq.jsReturnOnView("잘못된 접근입니다.");
-		}
-		
+		Member member = memberService.getMemberById(article.getMemberId()); 
 		member.setLoginPw(null);
 		
 		List<Board> boards = boardService.getBoardsByMemberId(article.getMemberId());

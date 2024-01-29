@@ -15,6 +15,7 @@
    		<!-- 사이드 메뉴 -->
 		<%@ include file="../common/sideBoardList.jsp" %>   		
 		
+		<!-- 게시글 리스트 -->
    		<nav class="flex-grow p-10">
    			<div class="flex items-center mb-4 text-2xl">
 	   			<c:if test="${nowBoard == null}">
@@ -37,7 +38,7 @@
 	   				</th>
 	   				<th width="200">날짜</th>
 	   				<th width="100">조회수</th>
-	   				<th width="100">추천수</th>
+	   				<th width="100">좋아요</th>
 	   			</tr>
 		   		<c:forEach var="article" items="${articles }">
 		   			<tr class="border-b hover:bg-gray-200">
@@ -66,7 +67,7 @@
 		   					조회수 : ${article.hitCount }
 		   				</td>
 		   				<td>
-		   					추천수 : ${article.hitCount }
+		   					좋아요 : ${article.point }
 		   				</td>
 		   			</tr>
 		   		</c:forEach>

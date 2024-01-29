@@ -19,9 +19,12 @@ public interface ArticleDao {
 					,b.id AS boardId
 					,b.name AS boardName
 					,(SELECT COUNT(*) FROM reply WHERE articleId = a.id) AS replyCnt 
+					,IFNULL(SUM(rp.point), 0) AS `point`
 				FROM board AS b
 				INNER JOIN article AS a
 				ON b.id = a.boardId
+				LEFT JOIN recommendPoint AS rp
+				ON a.id = rp.articleId
 				LEFT JOIN reply AS r
 				ON r.articleId = a.id
 				WHERE b.memberId = #{memberId}
@@ -52,7 +55,21 @@ public interface ArticleDao {
 			SELECT * FROM article
 				WHERE id = #{id}
 			""")
-	Article getArticleById(int id);
+	public Article getArticleById(int id);
+	
+	@Select("""
+			SELECT a.*
+			        , m.nickname AS writerName
+			        , IFNULL(SUM(rp.point), 0) AS `point`
+				FROM article AS a
+				INNER JOIN member AS m
+				ON a.memberId = m.id
+				LEFT JOIN recommendPoint AS rp
+				ON a.id = rp.articleId
+				WHERE a.id = #{id} 
+				GROUP BY a.id
+			""")
+	public Article forPrintArticle(int id);
 
 	@Select("""
 			SELECT id FROM article
