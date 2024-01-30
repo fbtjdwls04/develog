@@ -19,7 +19,7 @@ public interface ArticleDao {
 					,b.id AS boardId
 					,b.name AS boardName
 					,(SELECT COUNT(*) FROM reply WHERE articleId = a.id) AS replyCnt 
-					,IFNULL(SUM(rp.point), 0) AS `point`
+					,(SELECT COUNT(*) FROM recommendPoint WHERE articleId = a.id) AS `point` 
 				FROM board AS b
 				INNER JOIN article AS a
 				ON b.id = a.boardId

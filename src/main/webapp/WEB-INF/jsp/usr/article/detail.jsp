@@ -16,7 +16,7 @@
 				
 			$('#recommendBtn').click(function () {
 				
-				let recommendBtn = $('#recommendBtn').hasClass('btn-active');
+				let recommendBtn = $('#recommendBtn').hasClass('btn-actived');
 				
 				$.ajax({
 					url: "/usr/recommendPoint/doRecommendPoint",
@@ -49,8 +49,8 @@
 					dataType: "json",
 					success: function(data) {
 						if (data.success) {
-							$('#recommendBtn').addClass('btn-active');
-						}
+							$('#recommendBtn').addClass('btn-actived');
+							$('#recommendBtn').text('💗');						}
 					},
 					error: function(xhr, status, error) {
 						console.error("ERROR : " + status + " - " + error);
@@ -70,18 +70,6 @@
 			e.submit();
    		}
    		
-   		const replyModifySubmit = function(e) {
-   			
-			e.body.value = e.body.value.trim();
-			
-			if(e.body.value.length == 0){
-				alert("내용을 입력해주세요");
-				return;
-			}
-			
-			e.submit();
-		}
-   		
    		const replyModify_getForm = function(id) {
    			/* 해당 댓글을 제외한 나머지는 댓글만 보이게 (수정 입력칸 여러개 안켜지게) */
    			
@@ -91,6 +79,9 @@
 			
 			$('#reply' + id).hide();
 			$('#replyModifyForm' + id).css("display", "flex");
+			
+			let textarea = document.getElementById('textarea' + id);
+			resize(textarea);
 		}
    		
    		/* 수정 입력칸 닫기 */
@@ -134,7 +125,7 @@
 		
 			<!-- 좋아요 버튼 -->
 			<c:if test="${rq.getLoginedMemberId() != 0 }">
-				<button id="recommendBtn" class="text-2xl">🤍</button>
+				<button id="recommendBtn" class="text-2xl ml-4">🤍</button>
 				<span class="ml-2">${article.point }</span>
 			</c:if>
 			
@@ -175,7 +166,7 @@
 								<a href="list?memberId=${reply.memberId }">
 									${reply.writerName } </a>
 							</p>
-							<p class="break-words">${reply.body }</p>
+							<p class="whitespace-pre-wrap">${reply.body }</p>
 							<p class="text-[14px] text-[gray]">
 								${reply.updateDate }
 								<c:if test="${article.regDate != article.updateDate }">
@@ -202,10 +193,10 @@
 					
 					<!-- 댓글 수정창 -->
 					<form id="replyModifyForm${reply.id }" action="/usr/reply/doModify"
-						onsubmit="replyModifySubmit(this); return false;"
+						onsubmit="replySubmit(this); return false;"
 						class="mt-4 hidden replyModifyForm bg-white border-2 rounded-2xl flex flex-col p-4">
 						<input type="hidden" name="id" value="${reply.id}" />
-						<textarea name="body" placeholder="댓글을 입력해주세요"
+						<textarea id="textarea${reply.id }" name="body" placeholder="댓글을 입력해주세요"
 							class="text-black resize-none overflow-hidden"
 							onkeydown="resize(this)">${reply.body}</textarea>
 						<div class="mt-2 ml-auto">
