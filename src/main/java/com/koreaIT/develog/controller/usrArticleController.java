@@ -131,6 +131,9 @@ public class UsrArticleController {
 		if(article == null) {
 			return rq.jsReturnOnView("잘못된 접근입니다.");
 		}
+
+		Article prevArticle = articleService.getPrevArticle(id, article.getMemberId(), article.getBoardId());
+		Article nextArticle = articleService.getNextArticle(id, article.getMemberId(), article.getBoardId());
 		
 		Member member = memberService.getMemberById(article.getMemberId()); 
 		member.setLoginPw(null);
@@ -145,6 +148,8 @@ public class UsrArticleController {
 		model.addAttribute("boards",boards);
 		model.addAttribute("nowBoard",board);
 		model.addAttribute("replies",replies);
+		model.addAttribute("prevArticle",prevArticle);
+		model.addAttribute("nextArticle",nextArticle);
 		
 		return "/usr/article/detail";
 	}

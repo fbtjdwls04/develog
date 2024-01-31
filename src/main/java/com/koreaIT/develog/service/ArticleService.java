@@ -55,5 +55,13 @@ public class ArticleService {
 	public Article forPrintArticle(int id) {
 		return articleDao.forPrintArticle(id);
 	}
+
+	public Article getPrevArticle(int id, int memberId, int boardId) {
+		return articleDao.getPrevArticle(id, memberId, boardId);
+	}
+	
+	public Article getNextArticle(int id, int memberId, int boardId) {
+		return articleDao.getNextArticle(id, memberId, boardId);
+	}
 	
 }

@@ -1,6 +1,7 @@
 package com.koreaIT.develog.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -149,5 +150,50 @@ public class UsrMemberController {
 		}
 		
 		return ResultData.from("S-1", "로그인 성공");
+	}
+	
+	@RequestMapping("/usr/member/myPage")
+	public String myPage(Model model) {
+		
+		Member member = memberService.getMemberById(rq.getLoginedMemberId());
+		
+		model.addAttribute("member", member);
+		
+		return "/usr/member/myPage";
+	}
+	
+	@RequestMapping("/usr/member/doModify")
+	@ResponseBody
+	public String doModify(String loginPw, String name, String nickname, String cellphoneNum, String email) {
+		
+		Member member = memberService.getMemberById(rq.getLoginedMemberId());
+		
+		loginPw = Util.sha256(loginPw);
+		
+		if(member.getLoginPw().equals(loginPw) == false) {
+			return Util.jsHistoryBack("비밀번호를 확인해주세요");
+		}
+		
+		name = Util.cleanText(name);
+		nickname = Util.cleanText(nickname);
+		cellphoneNum = Util.cleanText(cellphoneNum);
+		email = Util.cleanText(email);
+		
+		if(Util.empty(name)) {
+			return Util.jsHistoryBack("이름을 입력해주세요");
+		}
+		if(Util.empty(nickname)) {
+			return Util.jsHistoryBack("닉네임을 입력해주세요");
+		}
+		if(Util.empty(cellphoneNum)) {
+			return Util.jsHistoryBack("전화번호를 입력해주세요");
+		}
+		if(Util.empty(email)) {
+			return Util.jsHistoryBack("이메일을 입력해주세요");
+		}
+		
+		
+		
+		return Util.jsReplace("정보가 수정되었습니다", "myPage");
 	}
 }

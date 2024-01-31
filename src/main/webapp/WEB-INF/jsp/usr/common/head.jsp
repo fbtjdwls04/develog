@@ -33,6 +33,22 @@
 			<c:if test="${rq.getLoginedMemberId() != 0}">
 				<li><a class="p-2 btn btn-sm btn-outline btn-accent" href="/usr/article/list?memberId=${rq.getLoginedMemberId() }">내 블로그</a></li>
 				<li><a class="p-2 btn btn-sm btn-outline btn-accent" href="/usr/member/doLogout">로그아웃</a></li>
+				<li class="ml-4">
+					<div class="avatar">
+					  	<div class="w-[35px] rounded-full">			
+							<c:if test="${member.profillImg == null }">
+									<a href="/usr/member/myPage">
+								    	<img src="https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTgy/MDAxNjA0MjI4ODc1NDMw.Ex906Mv9nnPEZGCh4SREknadZvzMO8LyDzGOHMKPdwAg.ZAmE6pU5lhEdeOUsPdxg8-gOuZrq_ipJ5VhqaViubI4g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%ED%95%98%EB%8A%98%EC%83%89.jpg?type=w800" alt="" />
+									</a>
+						  	</c:if>
+						  	<c:if test="${member.profillImg != null }">
+									<a href="/usr/member/myPage">
+								    	<img src="${member.profillImg }"/>	
+									</a>
+						  	</c:if>
+				  		</div>
+				  	</div>
+				</li>
 			</c:if>
 		</ul>
 	</header>

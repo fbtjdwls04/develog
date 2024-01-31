@@ -105,17 +105,34 @@
 	
 	<!-- 게시물 -->
 	<div class="w-full">
-		<div class="border-b p-20 pb-10 bg-gray-200">
+		<div class="border-b p-20 pb-5 bg-gray-200">
 			<a
 				href="list?memberId=${article.memberId}&boardId=${article.boardId }">[${nowBoard.name }]</a>
 			<p class="text-bold text-3xl">${article.title }</p>
-			<br /> <span class="text-base font-bold"> <i
-				class="fa-regular fa-user"></i> ${article.writerName}
-			</span> &nbsp; <span>${article.updateDate.substring(2,16) }</span>
-			<c:if test="${article.regDate != article.updateDate }">
-				<span class="text-[gray]"> (수정됨) </span>
-			</c:if>
-			&nbsp; <span>조회 ${article.hitCount }</span>
+			<br /> 
+			<div class="flex">
+				<span class="text-base font-bold">
+					<i class="fa-regular fa-user"></i> 
+					<a href="list?memberId=${article.memberId }">
+						${article.writerName}
+					</a>
+				</span> 
+				&nbsp; 
+				<span>${article.updateDate.substring(2,16) }</span>
+				<c:if test="${article.regDate != article.updateDate }">
+					<span class="text-[gray]"> (수정됨) </span>
+				</c:if>
+				&nbsp; 
+				<span>조회 ${article.hitCount }</span>
+				<div class="ml-auto">
+					<c:if test="${prevArticle != null}">
+						<a href="detail?id=${prevArticle.id}" class="btn btn-sm mr-2">이전 글</a>
+					</c:if>
+					<c:if test="${nextArticle != null}">
+						<a href="detail?id=${nextArticle.id}" class="btn btn-sm mr-2">다음 글</a>
+					</c:if>
+				</div>
+			</div>
 		</div>
 
 		<div id="viewer" class="p-20 w-[800px] bg-gray-100">

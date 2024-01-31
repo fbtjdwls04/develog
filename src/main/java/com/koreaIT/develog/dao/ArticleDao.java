@@ -149,4 +149,23 @@ public interface ArticleDao {
 			""")
 	public void increaseHitCount(int id);
 
+	@Select("""
+			SELECT * FROM article
+			WHERE memberId = #{memberId}
+			AND boardId = #{boardId}
+			AND id > #{id}
+			LIMIT 1
+			""")
+	public Article getPrevArticle(int id, int memberId, int boardId);
+
+	@Select("""
+			SELECT * FROM article
+			WHERE memberId = #{memberId}
+			AND boardId = #{boardId}
+			AND id < #{id}
+			ORDER BY id DESC
+			LIMIT 1
+			""")
+	public Article getNextArticle(int id, int memberId, int boardId);
+
 }

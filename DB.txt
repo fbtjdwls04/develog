@@ -40,7 +40,6 @@ CREATE TABLE board(
 CREATE TABLE `recommendPoint`(
     id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     memberId INT UNSIGNED NOT NULL,
-    relTypeCode VARCHAR(20) NOT NULL COMMENT '관련 데이터 타입 코드',
     relId INT UNSIGNED NOT NULL COMMENT '관련 데이터 번호',
     `point` INT NOT NULL DEFAULT 0
 );
@@ -50,10 +49,10 @@ CREATE TABLE reply(
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
     memberId INT UNSIGNED NOT NULL,
-    relTypeCode VARCHAR(20) NOT NULL,
-    relId INT UNSIGNED NOT NULL,
+    articleId INT UNSIGNED NOT NULL,
     `body` TEXT NOT NULL
 );
+
 
 TRUNCATE article;
 
@@ -128,12 +127,72 @@ SELECT * FROM board;
 SELECT * FROM recommendPoint;
 SELECT * FROM reply;
 
-
-select a.*, 
-       b.id as boardId,
+SELECT a.*, 
+       b.id AS boardId,
        b.name
-from board as b inner join article as a where b.id = a.boardId;
+FROM board AS b INNER JOIN article AS a WHERE b.id = a.boardId;
 
 
+SELECT r.*, m.nickname
+FROM reply AS r
+INNER JOIN MEMBER AS m
+WHERE r.memberId = m.id
+AND r.articleId = 1;
 
+ALTER TABLE `member` ADD COLUMN profillImg TEXT;
 
+SELECT a.*
+    , m.nickname AS writerName
+    , IFNULL(SUM(rp.point), 0) AS `point`
+FROM article AS a
+INNER JOIN MEMBER AS m
+ON a.memberId = m.id
+LEFT JOIN recommendPoint AS rp
+ON a.id = rp.articleId
+WHERE a.id = 118 
+GROUP BY a.id;
+
+SELECT a.*
+    ,b.id AS boardId
+    ,b.name AS boardName
+    ,(SELECT COUNT(*) FROM reply WHERE articleId = a.id) AS replyCnt 
+    ,(SELECT COUNT(*) FROM recommendPoint WHERE articleId = a.id) AS `point` 
+FROM article AS a
+INNER JOIN board AS b
+ON b.id = a.boardId
+LEFT JOIN reply AS r
+ON r.articleId = a.id
+LEFT JOIN recommendPoint AS rp
+ON a.id = rp.articleId
+WHERE b.memberId = 1
+GROUP BY a.id
+HAVING `point` > 0
+ORDER BY a.id DESC;
+
+SELECT a.*
+    ,b.id AS boardId
+    ,b.name AS boardName
+    , IFNULL(SUM(rp.point), 0) AS `point`
+FROM article AS a
+INNER JOIN board AS b
+ON b.id = a.boardId
+LEFT JOIN reply AS r
+ON r.articleId = a.id
+LEFT JOIN recommendPoint AS rp
+ON a.id = rp.articleId
+WHERE b.memberId = 1
+GROUP BY a.id
+HAVING `point` > 0
+ORDER BY a.id DESC;
+
+SELECT * FROM article
+			WHERE memberId = 1
+			AND id > 56
+			LIMIT 1;
+			
+SELECT * FROM article
+			WHERE memberId = 1
+			AND id < 56
+			ORDER BY id DESC
+			LIMIT 1;
+			
