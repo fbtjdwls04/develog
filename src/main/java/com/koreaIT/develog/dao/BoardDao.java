@@ -2,6 +2,7 @@ package com.koreaIT.develog.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -20,4 +21,13 @@ public interface BoardDao {
 				WHERE id = #{boardId}
 		""")
 	public Board getBoardById(int boardId);
+
+	@Insert("""
+			INSERT INTO board
+			SET regDate = NOW()
+				, updateDate = NOW()
+				, memberId = #{memberId}
+				, name = #{boardName}
+			""")
+	public void createBoard(int memberId, String boardName);
 }

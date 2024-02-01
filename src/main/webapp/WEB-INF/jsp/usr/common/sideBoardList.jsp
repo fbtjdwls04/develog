@@ -2,6 +2,19 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<script>
+	const createBoardSubmit = function(e) {
+		e.boardName.value = e.boardName.value.trim();
+		
+		if(e.boardName.value.length == 0){
+			alert("게시판 이름을 입력해주세요")
+			return;
+		}
+		
+		e.submit();
+	}
+</script>
+
 <div class="flex flex-col min-w-[300px] max-w-[300px]">
 	<div class="border min-h-[400px] flex flex-col items-center relative">
 		<!-- 프로필 수정 버튼 -->
@@ -28,14 +41,19 @@
 		<ul class="h-full p-2">
 			<li class="mb-4 flex justify-between">
 				<a href="list?memberId=${member.id}" class="hover:underline ${nowBoard == null ? 'font-bold' : '' }">전체 글 보기</a>
-				
+			</li>
+			<li class="mb-4">
 				<c:if test="${member.id == rq.getLoginedMemberId() }">
-					<button class="hover:text-[gray]"><i class="fa-solid fa-gear"></i></button>
+					<form action="/usr/board/create" class="flex items-center" onsubmit="createBoardSubmit(this); return false;">
+						<input name="boardName" type="text" class="input input-sm input-outlined input-bordered"/>
+						<button class="btn btn-sm btn-outline">게시판 추가</button>
+					</form>
 				</c:if>
 			</li>
 			<c:forEach var="board" items="${boards }">
-				<li class="hover:underline ${nowBoard.id == board.id ? 'font-bold' : '' }"><a
-					href="list?memberId=${board.memberId }&boardId=${board.id } ">${board.name }</a></li>
+				<li class="hover:underline ${nowBoard.id == board.id ? 'font-bold' : '' }">
+					<a href="list?memberId=${board.memberId }&boardId=${board.id } ">${board.name }</a>
+				</li>
 			</c:forEach>
 		</ul>
 	</nav>

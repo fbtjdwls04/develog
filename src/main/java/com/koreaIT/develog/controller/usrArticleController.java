@@ -268,7 +268,7 @@ public class UsrArticleController {
 		
 		articleService.doDeleteArticle(id);
 		
-		return Util.jsReplace("게시글이 삭제되었습니다", Util.f("/usr/article/list?memberId=%d&boardId=%d", article.getMemberId(), article.getBoardId()));
+		return Util.jsReplace("게시글이 삭제되었습니다", Util.f("list?memberId=%d&boardId=%d", article.getMemberId(), article.getBoardId()));
 	}
 	
 }

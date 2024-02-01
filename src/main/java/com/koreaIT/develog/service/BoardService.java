@@ -23,4 +23,8 @@ public class BoardService {
 	public Board getBoardById(int boardId) {
 		return boardDao.getBoardById(boardId);
 	}
+
+	public void createBoard(int memberId, String boardName) {
+		boardDao.createBoard(memberId, boardName);
+	}
 }

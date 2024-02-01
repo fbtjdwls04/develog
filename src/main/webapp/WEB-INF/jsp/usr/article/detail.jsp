@@ -131,6 +131,7 @@
 					<c:if test="${nextArticle != null}">
 						<a href="detail?id=${nextArticle.id}" class="btn btn-sm mr-2">다음 글</a>
 					</c:if>
+					<a href="list?memberId=${article.memberId }&boardId=${article.boardId}" class="btn btn-sm mr-2">목록</a>
 				</div>
 			</div>
 		</div>
