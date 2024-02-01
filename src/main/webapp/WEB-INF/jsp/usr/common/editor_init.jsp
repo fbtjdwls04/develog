@@ -6,6 +6,7 @@
 
 		if(e.boardId.value == 0){
 			alert('게시판을 선택해주세요');
+			e.boardId.focus();
 			return;
 		}
 		
@@ -23,6 +24,7 @@
 	 	
 		if(editor.getMarkdown() == 0){
 			alert('내용을 입력해주세요');
+			editor.focus();
 			return;
 		}
 		

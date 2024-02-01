@@ -15,8 +15,8 @@
    	<section class="flex container min-h-[1000px] mx-auto relative mt-[200px] justify-center items-center">
    		<form action="doWrite" onsubmit="submitForm(this); return false;" class="flex flex-col">
    			<div class="flex">
-	   			<select class="select max-w-xs" name="boardId" data-value="${article.boardId }">
-				  <option disabled value="0">게시판을 선택해주세요</option>
+	   			<select class="select max-w-xs" name="boardId">
+				  <option selected disabled value="0">게시판을 선택해주세요</option>
 				  <c:forEach var="board" items="${boards }">
 				  	<option value="${board.id }">${board.name }</option>
 				  </c:forEach>

@@ -7,12 +7,33 @@
 		e.boardName.value = e.boardName.value.trim();
 		
 		if(e.boardName.value.length == 0){
-			alert("게시판 이름을 입력해주세요")
+			alert("게시판 이름을 입력해주세요");
 			return;
 		}
 		
 		e.submit();
 	}
+	
+	const boardModify_getForm = function(id) {
+			/* 해당 댓글을 제외한 나머지는 댓글만 보이게 (수정 입력칸 여러개 안켜지게) */
+			
+		$('.board').css("display", "flex");
+		$('.boardModifyForm').hide();
+		/*  */
+		
+		$('#board' + id).hide();
+		$('#boardModifyForm' + id).css("display", "flex");
+		
+		let textarea = document.getElementById('textarea' + id);
+		resize(textarea);
+	}
+		
+		/* 수정 입력칸 닫기 */
+	const boardModifyForm_cancle = function(id) {
+		$('#board' + id).css("display", "flex");
+		$('#boardModifyForm' + id).hide();
+	}
+		
 </script>
 
 <div class="flex flex-col min-w-[300px] max-w-[300px]">
@@ -44,15 +65,43 @@
 			</li>
 			<li class="mb-4">
 				<c:if test="${member.id == rq.getLoginedMemberId() }">
-					<form action="/usr/board/create" class="flex items-center" onsubmit="createBoardSubmit(this); return false;">
+					<form action="/usr/board/create" class="flex items-center justify-center" onsubmit="createBoardSubmit(this); return false;">
 						<input name="boardName" type="text" class="input input-sm input-outlined input-bordered"/>
 						<button class="btn btn-sm btn-outline">게시판 추가</button>
 					</form>
 				</c:if>
 			</li>
 			<c:forEach var="board" items="${boards }">
-				<li class="hover:underline ${nowBoard.id == board.id ? 'font-bold' : '' }">
+				<li id="board${board.id }" class="hover:underline ${nowBoard.id == board.id ? 'font-bold' : '' } flex board">
 					<a href="list?memberId=${board.memberId }&boardId=${board.id } ">${board.name }</a>
+					
+					<!-- 게시판 수정, 삭제 버튼 -->
+					<c:if test="${member.id == rq.getLoginedMemberId() }">
+						<div class="dropdown dropdown-end ml-auto">
+							<div tabindex="0" role="button">
+								<i class="fa-solid fa-ellipsis-vertical p-2 text-[gray]"></i>
+							</div>
+							<ul tabindex="0"
+								class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box text-black w-20">
+								<li><button onclick="boardModify_getForm(${board.id})">수정</button></li>
+								<li><a href="/usr/board/doDelete?id=${board.id }"
+									onclick="if(confirm('해당 게시판과' 
+									 + '\n 게시판에 존재하는 모든 게시물들이 삭제됩니다.'
+									 + '\n 정말 [${board.name}] 게시판을 삭제하는게 맞습니까?') == false) return false;">삭제</a></li>
+							</ul>
+						</div>
+					</c:if>
+				</li>
+				<!-- 보드 수정창 -->
+				<li>
+					<form id="boardModifyForm${board.id }" action="/usr/board/doModify"
+						onsubmit="boardSubmit(this); return false;"
+						class="hidden boardModifyForm flex justify-center items-center">
+						<input type="hidden" name="id" value="${board.id}" />
+						<input type="text" name="boardName" value="${board.name }" class="input input-sm input-bordered"/>
+						<button type="button" onclick="boardModifyForm_cancle(${board.id})" class="btn btn-sm btn-error">취소</button>
+						<button class="btn-sm btn-accent btn">수정</button>
+					</form>
 				</li>
 			</c:forEach>
 		</ul>

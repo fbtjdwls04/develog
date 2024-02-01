@@ -168,7 +168,7 @@ public class UsrMemberController {
 		
 		Member member = memberService.getMemberById(rq.getLoginedMemberId());
 		
-		loginPw = Util.sha256(loginPw);
+		loginPw = Util.sha256(Util.cleanText(loginPw));
 		
 		if(member.getLoginPw().equals(loginPw) == false) {
 			return Util.jsHistoryBack("비밀번호를 확인해주세요");

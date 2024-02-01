@@ -27,4 +27,8 @@ public class BoardService {
 	public void createBoard(int memberId, String boardName) {
 		boardDao.createBoard(memberId, boardName);
 	}
+
+	public void boardModify(int id, String boardName) {
+		boardDao.boardModify(id, boardName);
+	}
 }

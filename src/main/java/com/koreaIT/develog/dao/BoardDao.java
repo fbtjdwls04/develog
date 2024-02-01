@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.koreaIT.develog.vo.Board;
 
@@ -30,4 +31,12 @@ public interface BoardDao {
 				, name = #{boardName}
 			""")
 	public void createBoard(int memberId, String boardName);
+
+	@Update("""
+			UPDATE board
+			SET name = #{boardName}
+				, updateDate = NOW()
+			WHERE id = #{id} 
+			""")
+	public void boardModify(int id, String boardName);
 }
