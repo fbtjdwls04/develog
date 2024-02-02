@@ -48,7 +48,7 @@ public class UsrReplyController {
 		
 		replyService.doWrite(articleId, rq.getLoginedMemberId(),body);
 		
-		return Util.jsReplace("댓글이 작성되었습니다", Util.f("/usr/article/detail?id=%d", articleId));
+		return Util.jsNotAlertReplace(Util.f("/usr/article/detail?id=%d", articleId));
 	}	
 	
 	@RequestMapping("/usr/reply/doDelete")

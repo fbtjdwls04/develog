@@ -25,16 +25,22 @@
 							"articleId" : ${article.id },
 							"recommendBtn" : recommendBtn
 						},
-					dataType: "text",
+					dataType: "json",
 					success: function(data) {
-						console.log(data);
+						if (data.success) {
+							$('#recommendBtn').addClass('btn-actived');
+							$('#recommendBtn').text('💗');						
+							$('#recommendPointCnt').text(data.data);
+						}else{
+							$('#recommendBtn').removeClass('btn-actived');
+							$('#recommendBtn').text('🤍');	
+							$('#recommendPointCnt').text(data.data);
+						}
 					},
 					error: function(xhr, status, error) {
 						console.error("ERROR : " + status + " - " + error);
 					}
 				})
-				
-				location.reload();
 				
 			})
 		})
@@ -50,7 +56,8 @@
 					success: function(data) {
 						if (data.success) {
 							$('#recommendBtn').addClass('btn-actived');
-							$('#recommendBtn').text('💗');						}
+							$('#recommendBtn').text('💗');						
+						}
 					},
 					error: function(xhr, status, error) {
 						console.error("ERROR : " + status + " - " + error);
@@ -107,7 +114,8 @@
 	<div class="w-full">
 		<div class="border-b p-20 pb-5 bg-gray-200">
 			<a
-				href="list?memberId=${article.memberId}&boardId=${article.boardId }">[${nowBoard.name }]</a>
+				href="list?memberId=${article.memberId}&boardId=${article.boardId }"
+				class="mb-2 flex">[${nowBoard.name }]</a>
 			<p class="text-bold text-3xl">${article.title }</p>
 			<br /> 
 			<div class="flex">
@@ -144,7 +152,7 @@
 			<!-- 좋아요 버튼 -->
 			<c:if test="${rq.getLoginedMemberId() != 0 }">
 				<button id="recommendBtn" class="text-2xl ml-4">🤍</button>
-				<span class="ml-2">${article.point }</span>
+				<span id="recommendPointCnt" class="ml-2">${article.point }</span>
 			</c:if>
 			
 			<!-- 게시글 수정 삭제 버튼 -->
@@ -187,7 +195,7 @@
 							<p class="whitespace-pre-wrap">${reply.body }</p>
 							<p class="text-[14px] text-[gray]">
 								${reply.updateDate }
-								<c:if test="${article.regDate != article.updateDate }">
+								<c:if test="${reply.regDate != reply.updateDate }">
 									<span> (수정됨) </span>
 								</c:if>
 							</p>

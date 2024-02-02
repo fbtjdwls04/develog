@@ -53,6 +53,15 @@ public class Util {
 				""", msg, uri);
 	}
 
+	public static String jsNotAlertReplace(String uri) {
+
+		return Util.f("""
+				<script>
+				location.replace('%s');
+			</script>
+		""", uri);
+	}
+	
 	public static int getBeginPage(int boardPage, int pageSize ) {
 		return boardPage % pageSize == 0 ? boardPage - pageSize + 1 : boardPage - boardPage % pageSize + 1;
 	}
@@ -90,4 +99,5 @@ public class Util {
 			return "";
 		}
 	}
+
 }

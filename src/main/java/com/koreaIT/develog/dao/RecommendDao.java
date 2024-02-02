@@ -32,4 +32,10 @@ public interface RecommendDao {
 			""")
 	void insertRecommendPoint(int articleId, int memberId);
 
+	@Select("""
+			SELECT COUNT(*) FROM recommendPoint
+			WHERE articleId = #{articleId}
+			""")
+	int getRecommendPointCnt(int articleId);
+
 }

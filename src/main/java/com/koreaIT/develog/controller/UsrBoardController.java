@@ -31,6 +31,10 @@ public class UsrBoardController {
 			return Util.jsHistoryBack("게시판 이름을 입력해주세요");
 		}
 		
+		if(boardName.length() > 10) {
+			return Util.jsHistoryBack("게시판 이름은 최대 10글자까지 가능합니다");
+		}
+		
 		boardService.createBoard(rq.getLoginedMemberId(), boardName);
 		
 		return Util.jsReplace("게시판이 생성되었습니다", Util.f("/usr/article/list?memberId=%d", rq.getLoginedMemberId()));
@@ -52,6 +56,10 @@ public class UsrBoardController {
 		
 		if(Util.empty(boardName)) {
 			return Util.jsHistoryBack("게시판 이름을 입력해주세요");
+		}
+		
+		if(boardName.length() > 10) {
+			return Util.jsHistoryBack("게시판 이름은 최대 10글자까지 가능합니다");
 		}
 		
 		boardService.boardModify(id, boardName);

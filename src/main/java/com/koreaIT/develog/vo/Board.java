@@ -13,4 +13,6 @@ public class Board {
 	private String updateDate;
 	private int memberId;
 	private String name;
+	
+	private int articleCnt;
 }

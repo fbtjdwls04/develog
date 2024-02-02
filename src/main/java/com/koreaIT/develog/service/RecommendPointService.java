@@ -25,5 +25,9 @@ public class RecommendPointService {
 	public void insertRecommendPoint(int articleId, int memberId) {
 		recommendDao.insertRecommendPoint(articleId, memberId);
 	}
+
+	public int getRecommendPointCnt(int articleId) {
+		return recommendDao.getRecommendPointCnt(articleId);
+	}
 	
 }

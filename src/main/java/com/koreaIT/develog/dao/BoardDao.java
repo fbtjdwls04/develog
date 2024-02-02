@@ -12,8 +12,14 @@ import com.koreaIT.develog.vo.Board;
 @Mapper
 public interface BoardDao {
 	@Select("""
-			SELECT * FROM board
-				WHERE memberId = #{memberId}
+			SELECT b.*
+				,  COUNT(a.id) AS articleCnt
+				FROM 
+				board AS b
+				INNER JOIN article AS a
+				ON a.boardId = b.id
+				WHERE b.memberId = #{memberId}
+				GROUP BY b.id
 		""")
 	public List<Board> getBoardsByMemberId(int memberId);
 

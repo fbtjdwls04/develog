@@ -49,6 +49,7 @@ public interface ReplyDao {
 	@Update("""
 			UPDATE reply
 			SET body = #{body}
+			, updateDate = NOW()
 			WHERE id = #{id}
 			""")
 	void doModify(int id, String body);

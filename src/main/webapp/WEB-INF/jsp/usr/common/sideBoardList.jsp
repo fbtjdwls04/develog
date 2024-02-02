@@ -3,11 +3,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <script>
-	const createBoardSubmit = function(e) {
+	const boardSubmit = function(e) {
 		e.boardName.value = e.boardName.value.trim();
 		
 		if(e.boardName.value.length == 0){
 			alert("게시판 이름을 입력해주세요");
+			return;
+		}
+		
+		if(e.boardName.value.length > 10){
+			alert("게시판 이름은 최대 10글자까지 가능합니다");
 			return;
 		}
 		
@@ -65,16 +70,16 @@
 			</li>
 			<li class="mb-4">
 				<c:if test="${member.id == rq.getLoginedMemberId() }">
-					<form action="/usr/board/create" class="flex items-center justify-center" onsubmit="createBoardSubmit(this); return false;">
-						<input name="boardName" type="text" class="input input-sm input-outlined input-bordered"/>
+					<form action="/usr/board/create" class="flex items-center justify-center" onsubmit="boardSubmit(this); return false;">
+						<input name="boardName" type="text" class="input input-sm input-outlined input-bordered" placeholder="게시판 이름은 최대 10글자까지 가능합니다"/>
 						<button class="btn btn-sm btn-outline">게시판 추가</button>
 					</form>
 				</c:if>
 			</li>
 			<c:forEach var="board" items="${boards }">
-				<li id="board${board.id }" class="hover:underline ${nowBoard.id == board.id ? 'font-bold' : '' } flex board">
-					<a href="list?memberId=${board.memberId }&boardId=${board.id } ">${board.name }</a>
-					
+				<li id="board${board.id }" class="flex board items-center">
+					<a href="list?memberId=${board.memberId }&boardId=${board.id }" class="hover:underline ${nowBoard.id == board.id ? 'font-bold' : '' }">${board.name }</a>
+					<span class="text-[11px] ml-2">${board.articleCnt }</span>
 					<!-- 게시판 수정, 삭제 버튼 -->
 					<c:if test="${member.id == rq.getLoginedMemberId() }">
 						<div class="dropdown dropdown-end ml-auto">
@@ -98,7 +103,7 @@
 						onsubmit="boardSubmit(this); return false;"
 						class="hidden boardModifyForm flex justify-center items-center">
 						<input type="hidden" name="id" value="${board.id}" />
-						<input type="text" name="boardName" value="${board.name }" class="input input-sm input-bordered"/>
+						<input type="text" name="boardName" value="${board.name }" class="input input-sm input-bordered" placeholder="게시판 이름은 최대 10글자까지 가능합니다"/>
 						<button type="button" onclick="boardModifyForm_cancle(${board.id})" class="btn btn-sm btn-error">취소</button>
 						<button class="btn-sm btn-accent btn">수정</button>
 					</form>
