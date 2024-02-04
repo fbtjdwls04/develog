@@ -27,4 +27,8 @@ public class MemberService {
 		memberDao.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 	}
 
+	public void doModifyIntroduct(int memberId, String itd) {
+		memberDao.doModifyIntroduct(memberId, itd);
+	}
+
 }

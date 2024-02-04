@@ -43,6 +43,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/member/doLogout");
 		ir.addPathPatterns("/usr/member/myPage");
 		ir.addPathPatterns("/usr/member/doModify");
+		ir.addPathPatterns("/usr/member/doModifyIntroduct");
 		ir.addPathPatterns("/usr/recommendPoint/doRecommendPoint");
 		ir.addPathPatterns("/usr/board/create");
 		ir.addPathPatterns("/usr/board/doModify");

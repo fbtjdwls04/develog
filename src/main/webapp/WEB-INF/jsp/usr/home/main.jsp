@@ -19,9 +19,9 @@
    		<nav class="mt-20 flex justify-center h-[250px]">
    			<ul class="flex flex-col items-center border p-4 rounded-[20px] bg-gray-700 overflow-y-scroll">
 	   			<c:forEach var="article" items="${articles }">
-	   				<li class="w-[800px] text-center border bg-[rgb(20,20,20)] my-2 rounded-[20px]">
-	   					<a href="/usr/article/detail?id=${article.id }" class="flex flex-col justify-center p-2 ">
-	   						<div class="text-2xl text-bold">${article.title }</div>
+	   				<li class="text-center border bg-[rgb(20,20,20)] my-2 rounded-[20px]">
+	   					<a href="/usr/article/detail?id=${article.id }" class="flex flex-col justify-center p-2 w-[800px] h-[100px]">
+	   						<div class="text-2xl text-bold truncate">${article.title }</div>
 	   						<div class="max-h-[50px] min-h-[50px] truncate">${article.body }</div>
 	   					</a>
 	   				</li>

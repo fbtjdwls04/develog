@@ -21,4 +21,5 @@ public class Member {
 	private String delStatus;
 	private String delDate;
 	private String profillImg;
+	private String introduction;
 }

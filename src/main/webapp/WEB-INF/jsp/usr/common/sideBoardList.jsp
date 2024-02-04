@@ -9,15 +9,15 @@
 		if(e.boardName.value.length == 0){
 			alert("게시판 이름을 입력해주세요");
 			return;
-		}
+		};
 		
 		if(e.boardName.value.length > 10){
 			alert("게시판 이름은 최대 10글자까지 가능합니다");
 			return;
-		}
+		};
 		
 		e.submit();
-	}
+	};
 	
 	const boardModify_getForm = function(id) {
 			/* 해당 댓글을 제외한 나머지는 댓글만 보이게 (수정 입력칸 여러개 안켜지게) */
@@ -31,22 +31,55 @@
 		
 		let textarea = document.getElementById('textarea' + id);
 		resize(textarea);
-	}
+	};
 		
 		/* 수정 입력칸 닫기 */
 	const boardModifyForm_cancle = function(id) {
 		$('#board' + id).css("display", "flex");
 		$('#boardModifyForm' + id).hide();
-	}
+	};
 		
+	$(document).ready(function() {
+		$("#itdBtn").click(function() {
+			$("#itdForm").show();
+			$("#itdBtn").hide();
+			$("#itd").hide();
+			
+			let itd = document.getElementById('itd');
+			resize(itd);
+		});
+		
+		$("#itdFormCancleBtn").click(function() {
+			$("#itdForm").hide();
+			$("#itdBtn").show();
+			$("#itd").show();
+		});
+	})
+	;
+	const resize = function(e) {
+   			e.style.height = 'auto';
+   			e.style.height = (20 + e.scrollHeight) + 'px';
+   		};
+		
+	const idtSubmit = function(e) {
+		e.itd.value = e.itd.value.trim();
+		
+		if(e.itd.length == 0 ){
+			alert("소개글을 입력해주세요");
+			return;
+		}
+		
+		if(e.itd.length > 100 ){
+			alert("소개글은 100자 이하만 가능합니다")
+			return;
+		}
+		
+		e.submit();
+	};
 </script>
 
 <div class="flex flex-col min-w-[300px] max-w-[300px]">
 	<div class="border min-h-[400px] flex flex-col items-center relative">
-		<!-- 프로필 수정 버튼 -->
-		<c:if test="${member.id == rq.getLoginedMemberId() }">
-			<button class="absolute right-[20px] top-[20px] hover:text-[gray]"><i class="fa-solid fa-pen"></i></button>
-		</c:if>	
 		<!-- 프로필 화면 -->
 		<div class="avatar mt-20">
 		  <div class="w-[100px] rounded-full">
@@ -59,7 +92,19 @@
 		  </div>
 		</div>
 		<p class="m-4 text-2xl">${member.nickname} 의 블로그</p>
-		<p class="p-4">안녕하세요 개발자가 꿈입니다</p>
+		<p id="itd" class="p-4 whitespace-pre-wrap">${member.introduction }</p>
+		
+		<!-- 프로필 수정 버튼 -->
+		<c:if test="${member.id == rq.getLoginedMemberId() }">
+			<button id="itdBtn" class="absolute right-[20px] top-[20px] hover:text-[gray]"><i class="fa-solid fa-pen"></i></button>
+			<form id="itdForm" action="/usr/member/doModifyIntroduct" class="hidden" onsubmit="itdSubmit(this); return false">
+				<textarea name="itd" cols="30" rows="2" onkeydown="resize(this);">${member.introduction }</textarea>
+				<div>
+					<button>수정</button>
+					<button id="itdFormCancleBtn" type="button">취소</button>
+				</div>
+			</form>
+		</c:if>	
 	</div>
 	
 	<!-- 게시판 리스트 -->

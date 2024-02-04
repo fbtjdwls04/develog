@@ -196,4 +196,21 @@ public class UsrMemberController {
 		
 		return Util.jsReplace("정보가 수정되었습니다", "myPage");
 	}
+	
+	@RequestMapping("/usr/member/doModifyIntroduct")
+	@ResponseBody
+	public String doModifyIntroduct(String itd) {
+		
+		if(Util.empty(itd)) {
+			return Util.jsHistoryBack("소개글을 입력해주세요");
+		}
+		
+		if(itd.length() > 100) {
+			return Util.jsHistoryBack("소개글은 100자 이하만 가능합니다");
+		}
+		
+		memberService.doModifyIntroduct(rq.getLoginedMemberId(), itd);
+		
+		return Util.jsNotAlertReplace(Util.f("/usr/article/list?memberId=%d", rq.getLoginedMemberId()));
+	}
 }

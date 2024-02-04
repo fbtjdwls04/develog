@@ -33,7 +33,7 @@
 			<c:if test="${rq.getLoginedMemberId() != 0}">
 				<li><a class="p-2 btn btn-sm btn-outline btn-accent" href="/usr/article/list?memberId=${rq.getLoginedMemberId() }">내 블로그</a></li>
 				<li><a class="p-2 btn btn-sm btn-outline btn-accent" href="/usr/member/doLogout">로그아웃</a></li>
-				<li class="ml-4">
+				<li class="mx-4">
 					<div class="avatar">
 					  	<div class="w-[35px] rounded-full">			
 							<c:if test="${member.profillImg == null }">
