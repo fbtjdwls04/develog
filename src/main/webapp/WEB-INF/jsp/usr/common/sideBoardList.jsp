@@ -45,8 +45,8 @@
 			$("#itdBtn").hide();
 			$("#itd").hide();
 			
-			let itd = document.getElementById('itd');
-			resize(itd);
+			let itdTextarea = document.getElementById('itdTextarea');
+			resize(itdTextarea);
 		});
 		
 		$("#itdFormCancleBtn").click(function() {
@@ -64,12 +64,12 @@
 	const idtSubmit = function(e) {
 		e.itd.value = e.itd.value.trim();
 		
-		if(e.itd.length == 0 ){
+		if(e.itd.value.length == 0 ){
 			alert("소개글을 입력해주세요");
 			return;
 		}
 		
-		if(e.itd.length > 100 ){
+		if(e.itd.value.length > 100 ){
 			alert("소개글은 100자 이하만 가능합니다")
 			return;
 		}
@@ -98,10 +98,10 @@
 		<c:if test="${member.id == rq.getLoginedMemberId() }">
 			<button id="itdBtn" class="absolute right-[20px] top-[20px] hover:text-[gray]"><i class="fa-solid fa-pen"></i></button>
 			<form id="itdForm" action="/usr/member/doModifyIntroduct" class="hidden" onsubmit="itdSubmit(this); return false">
-				<textarea name="itd" cols="30" rows="2" onkeydown="resize(this);">${member.introduction }</textarea>
-				<div>
-					<button>수정</button>
-					<button id="itdFormCancleBtn" type="button">취소</button>
+				<textarea id="itdTextarea" name="itd" cols="30" rows="2" onkeydown="resize(this);">${member.introduction }</textarea>
+				<div class="flex justify-end">
+					<button class="btn btn-sm">수정</button>
+					<button class="btn btn-sm" id="itdFormCancleBtn" type="button">취소</button>
 				</div>
 			</form>
 		</c:if>	

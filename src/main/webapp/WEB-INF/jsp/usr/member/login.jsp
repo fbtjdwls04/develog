@@ -73,7 +73,7 @@
 				</tr>
 			</table>
 		</form>
-		<div class="mt-4">
+		<div class="mt-4 relative">
 			<button class="btn btn-xs btn-outline mr-4">
 				<a href="findLoginId">아이디 찾기</a>
 			</button>

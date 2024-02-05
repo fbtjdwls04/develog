@@ -213,4 +213,24 @@ public class UsrMemberController {
 		
 		return Util.jsNotAlertReplace(Util.f("/usr/article/list?memberId=%d", rq.getLoginedMemberId()));
 	}
+	
+	@RequestMapping("/usr/member/findLoginId")
+	public String findLoginId() {
+		
+		return "/usr/member/findLoginId";
+	}
+	
+	@RequestMapping("/usr/member/doFindLoginId")
+	@ResponseBody
+	public String doFindLoginId(String name, String email) {
+		
+		if(Util.empty(name)) {
+			return Util.jsHistoryBack("이름을 입력해주세요");
+		}
+		if(Util.empty(email)) {
+			return Util.jsHistoryBack("이메일을 입력해주세요");
+		}
+		
+		return Util.jsNotAlertReplace("/");
+	}
 }
