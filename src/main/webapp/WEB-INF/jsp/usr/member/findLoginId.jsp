@@ -6,6 +6,7 @@
    		function findLoginIdSubmit(e) {
    			e.name.value = e.loginId.value.trim();
    			e.email.value = e.loginPw.value.trim();
+   			e.cellphoneNum.value = e.loginPw.value.trim();
    			
    			if(e.name.value.length == 0){
    				alert('이름을 입력해주세요');
@@ -16,6 +17,12 @@
    			if(e.email.value.length == 0){
    				alert('이메일을 입력해주세요');
    				e.email.focus();
+   				return;
+   			}
+   			
+   			if(e.cellphoneNum.value.length == 0){
+   				alert('전화번호를 입력해주세요');
+   				e.cellphoneNum.focus();
    				return;
    			}
    			e.submit();
@@ -42,6 +49,10 @@
 				<tr>
 					<th>이메일</th>
 					<td><input class="input input-bordered w-full max-w-xs" type="email" name="email" /></td>
+				</tr>
+				<tr>
+					<th>전화번호</th>
+					<td><input class="input input-bordered w-full max-w-xs" type="text" name="cellphoneNum" /></td>
 				</tr>
 				<tr>
 					<th colspan="2" class="p-0 hover:bg-base-200">

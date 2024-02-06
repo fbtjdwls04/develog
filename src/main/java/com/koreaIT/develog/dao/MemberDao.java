@@ -42,5 +42,32 @@ public interface MemberDao {
 			WHERE id = #{memberId}
 			""")
 	public void doModifyIntroduct(int memberId, String itd);
+
+	@Select("""
+			SELECT * 
+				FROM `member`
+				WHERE name = #{name}
+				AND email = #{email}
+				AND cellphoneNum = #{cellphoneNum}
+			""")
+	public Member getMemberByNameAndEmailAndCell(String name, String email, String cellphoneNum);
+
+	@Update("""
+			UPDATE `member`
+			SET loginPw = SHA2(#{tempPassword},256)
+			WHERE id = #{id}
+			""")
+	public void doPasswordModify(int id, String tempPassword);
+	
+	@Update("""
+			UPDATE `member`
+			SET name = #{name},
+			nickname = #{nickname},
+			cellphoneNum = #{cellphoneNum},
+			email = #{email},
+			updateDate = NOW()
+			WHERE id = #{id}
+			""")
+	public void doModify(int id, String name, String nickname, String cellphoneNum, String email);
 	
 }
