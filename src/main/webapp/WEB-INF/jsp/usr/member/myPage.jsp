@@ -6,17 +6,11 @@
    	
    	<script>
    		function modifySubmit(e) {
-   			e.loginPw.value = e.loginPw.value.trim();
    			e.name.value = e.name.value.trim();
    			e.nickname.value = e.nickname.value.trim();
    			e.cellphoneNum.value = e.cellphoneNum.value.trim();
    			e.email.value = e.email.value.trim();
    			
-   			if(e.loginPw.value.length == 0){
-   				alert('비밀번호를 입력해주세요');
-   				e.loginPw.focus();
-   				return;
-   			}
    			if(e.name.value.length == 0){
    				alert('이름을 입력해주세요');
    				e.name.focus();
@@ -50,20 +44,13 @@
    		class="w-full opacity-80" />
    	</div>
    	
-	<section class="flex justify-center relative w-[400px] mx-auto mt-[200px]">
+	<section class="flex flex-col items-center justify-center mx-auto mt-[200px]">
 		<form action="doModify" onsubmit="modifySubmit(this); return false;" method="post">
 			<table class="table text-center bg-gray-100 overflow-hidden">
 				<tr>
 					<th>아이디</th>
 					<td>
 						${member.loginId }
-					</td>
-				</tr>
-				<tr>
-					<th>비밀번호</th>
-					<td>
-						<input class="input input-bordered w-full" type="password" name="loginPw" />
-						<div class="h-2"></div>
 					</td>
 				</tr>
 				<tr>
@@ -97,6 +84,13 @@
 				<tr>
 					<td colspan="2" class="p-0 hover:bg-gray-200">
 						<button class="w-full text-center p-4 font-bold">수정완료</button>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="p-0 hover:bg-gray-200">
+						<button type="button" class="w-full text-center p-4 font-bold">
+							<a href="pwModify">비밀번호 수정</a>
+						</button>
 					</td>
 				</tr>
 			</table>

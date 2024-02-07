@@ -69,5 +69,11 @@ public interface MemberDao {
 			WHERE id = #{id}
 			""")
 	public void doModify(int id, String name, String nickname, String cellphoneNum, String email);
+
+	@Select("""
+			SELECT * FROM `member`
+			WHERE nickname = #{nickname}
+			""")
+	public Member getMemberByNickname(String nickname);
 	
 }

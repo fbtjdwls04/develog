@@ -47,6 +47,12 @@
    				e.nickname.focus();
    				return;
    			}
+   			
+   			if(e.nickname.value.length != vaildNickname){
+   				alert(e.loginId.value + '은(는) 이미 사용중인 닉네임입니다');
+   				e.nickname.focus();
+   				return;
+   			}
    			//수정 필요
    			if(e.cellphoneNum.value.length == 0){
    				alert('전화번호를 입력해주세요');
@@ -92,6 +98,37 @@
 				}
 			})
 		}
+   		
+   		const nicknameDupChk = function(e) {
+			e.value = e.value.trim();
+			let chkMsg = $(e).next();
+			chkMsg.empty();
+			
+			$.ajax({
+				url: "nicknameDupChk",
+				method: "get",
+				data: {
+						"nickname" : e.value
+					},
+				dataType: "json",
+				success: function(data) {
+					if(data.success){
+						chkMsg.removeClass('text-red-500');
+						chkMsg.addClass('text-green-500');
+						chkMsg.html(`<span>\${data.msg}</span>`);
+						vaildNickname = e.value;
+					}else{
+						chkMsg.removeClass('text-green-500');
+						chkMsg.addClass('text-red-500');
+						chkMsg.html(`<span>\${data.msg}</span>`);
+						vaildNickname = '';
+					}
+				},
+				error: function(xhr, status, error) {
+					console.error("ERROR : " + status + " - " + error);
+				}
+			})
+		}
    	</script>
    	
    	<!-- 배경화면  -->
@@ -101,7 +138,7 @@
    		class="w-full opacity-80" />
    	</div>
    	
-	<section class="flex justify-center relative mt-[200px]">
+	<section class="flex justify-center mt-[200px]">
 		<form action="doJoin" onsubmit="joinSubmit(this); return false;" method="post">
 			<table class="table text-center bg-gray-100 overflow-hidden">
 				<tr>
@@ -135,7 +172,7 @@
 				<tr>
 					<th>닉네임</th>
 					<td>
-						<input class="input input-bordered w-full" type="text" name="nickname" autocomplete="off" />
+						<input class="input input-bordered w-full" type="text" name="nickname" autocomplete="off" onblur="nicknameDupChk(this);"/>
 						<div class="h-2"></div>
 					</td>
 				</tr>

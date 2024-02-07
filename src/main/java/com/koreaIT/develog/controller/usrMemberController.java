@@ -129,6 +129,26 @@ public class UsrMemberController {
 		return ResultData.from("S-1", "사용 가능한 아이디");
 	}
 	
+	@RequestMapping("/usr/member/nicknameDupChk")
+	@ResponseBody
+	public ResultData nicknameDupChk(String nickname) {
+		
+		
+		if(Util.empty(nickname)) {
+			return ResultData.from("F-1", "닉네임을 입력해주세요");
+		}
+		
+		nickname = Util.cleanText(nickname);
+		
+		Member member = memberService.getMemberByNickname(nickname);
+		
+		if(member != null) {
+			return ResultData.from("F-2", "이미 사용중인 닉네임입니다");
+		}
+		
+		return ResultData.from("S-1", "사용 가능한 닉네임");
+	}
+	
 	@RequestMapping("/usr/member/loginInfoCheck")
 	@ResponseBody
 	public ResultData loginInfoCheck(String loginId, String loginPw) {
@@ -164,15 +184,9 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
-	public String doModify(String loginPw, String name, String nickname, String cellphoneNum, String email) {
+	public String doModify(String name, String nickname, String cellphoneNum, String email) {
 		
 		Member member = memberService.getMemberById(rq.getLoginedMemberId());
-		
-		loginPw = Util.sha256(Util.cleanText(loginPw));
-		
-		if(member.getLoginPw().equals(loginPw) == false) {
-			return Util.jsHistoryBack("비밀번호를 확인해주세요");
-		}
 		
 		name = Util.cleanText(name);
 		nickname = Util.cleanText(nickname);
@@ -195,6 +209,31 @@ public class UsrMemberController {
 		memberService.doModify(rq.getLoginedMemberId(),name, nickname, cellphoneNum, email);
 		
 		return Util.jsReplace("정보가 수정되었습니다", "myPage");
+	}
+	
+	@RequestMapping("/usr/member/pwModify")
+	public String pwModify() {
+		
+		return "/usr/member/pwModify";
+	}
+	
+	@RequestMapping("/usr/member/doPwModify")
+	@ResponseBody
+	public String doPwModify(String password, String pwChk) {
+		
+		Member member = memberService.getMemberById(rq.getLoginedMemberId());
+		
+		if(password.equals(pwChk) == false) {
+			return Util.jsHistoryBack("비밀번호와 비밀번호 확인이 일치하지 않습니다");
+		}
+		
+		if(member.getLoginPw().equals(Util.sha256(password))) {
+			return Util.jsHistoryBack("현재 비밀번호와 동일합니다");
+		}
+		
+		memberService.doPwModify(member,password);
+		
+		return Util.jsReplace("비밀번호가 변경되었습니다", "/");
 	}
 	
 	@RequestMapping("/usr/member/doModifyIntroduct")

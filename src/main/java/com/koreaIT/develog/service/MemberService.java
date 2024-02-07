@@ -61,12 +61,19 @@ public class MemberService {
 
 		return ResultData.from("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다");
 	}
+	public void doPwModify(Member member, String password) {
+		setTempPassword(member, password);
+	}
 	private void setTempPassword(Member member, String tempPassword) {
 		memberDao.doPasswordModify(member.getId(), tempPassword);
 	}
 
 	public void doModify(int id, String name, String nickname, String cellphoneNum, String email) {
 		memberDao.doModify(id, name, nickname, cellphoneNum, email);
+	}
+
+	public Member getMemberByNickname(String nickname) {
+		return memberDao.getMemberByNickname(nickname);
 	}
 
 }
