@@ -61,7 +61,7 @@
    			e.style.height = (20 + e.scrollHeight) + 'px';
    		};
 		
-	const idtSubmit = function(e) {
+	const itdSubmit = function(e) {
 		e.itd.value = e.itd.value.trim();
 		
 		if(e.itd.value.length == 0 ){

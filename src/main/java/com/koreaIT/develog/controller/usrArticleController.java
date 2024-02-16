@@ -59,6 +59,8 @@ public class UsrArticleController {
 		List<Board> boards = boardService.getBoardsByMemberId(memberId);
 		Board board = boardService.getBoardById(boardId);
 		
+		System.out.println(boards);
+		
 		if(member == null) {
 			return rq.jsReturnOnView("잘못된 접근입니다.");
 		}

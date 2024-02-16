@@ -56,6 +56,9 @@
 		<form action="doLogin" onsubmit="loginSubmit(this); return false;" method="post">
 			<table class="table text-center bg-gray-200 overflow-hidden" >
 				<tr>
+					<th colspan="2">로그인</th>
+				</tr>
+				<tr>
 					<th>아이디</th>
 					<td>
 						<input class="input input-bordered w-full max-w-xs" type="text" name="loginId" autocomplete="off"/>

@@ -16,7 +16,7 @@ public interface BoardDao {
 				,  COUNT(a.id) AS articleCnt
 				FROM 
 				board AS b
-				INNER JOIN article AS a
+				LEFT JOIN article AS a
 				ON a.boardId = b.id
 				WHERE b.memberId = #{memberId}
 				GROUP BY b.id

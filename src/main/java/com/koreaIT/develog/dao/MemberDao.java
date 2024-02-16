@@ -24,7 +24,7 @@ public interface MemberDao {
 
 	@Insert("""
 			INSERT INTO `member`
-				SET regDate = NOW(),
+				SET regDate = NOW()
 					,updateDate = NOW()
 					,loginId = #{loginId}
 					,loginPw = SHA2(#{loginPw},256)

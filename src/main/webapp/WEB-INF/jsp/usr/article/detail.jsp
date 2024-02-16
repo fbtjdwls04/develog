@@ -172,7 +172,7 @@
 		<div class="m-4 mb-20">
 			<p class="m-4">댓글 ${replies.size() }</p>
 			<c:forEach var="reply" items="${replies }">
-				<div class="m-4">
+				<div class="mx-4">
 					<div id="reply${reply.id }" class="flex items-center reply">
 						<div class="avatar mr-4">
 							<div class="w-[50px] rounded-full">

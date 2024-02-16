@@ -48,8 +48,9 @@
    				return;
    			}
    			
-   			if(e.nickname.value.length != vaildNickname){
-   				alert(e.loginId.value + '은(는) 이미 사용중인 닉네임입니다');
+   			if(e.nickname.value != vaildNickname){
+   				alert(e.nickname.value + '은(는) 이미 사용중인 닉네임입니다');
+   				e.nickname.value = '';
    				e.nickname.focus();
    				return;
    			}
@@ -141,6 +142,9 @@
 	<section class="flex justify-center mt-[200px]">
 		<form action="doJoin" onsubmit="joinSubmit(this); return false;" method="post">
 			<table class="table text-center bg-gray-100 overflow-hidden">
+				<tr>
+					<th colspan="2">회원 가입</th>
+				</tr>
 				<tr>
 					<th>아이디</th>
 					<td>
