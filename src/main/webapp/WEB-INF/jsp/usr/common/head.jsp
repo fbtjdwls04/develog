@@ -24,7 +24,10 @@
 </head>
 <body>
 	<header class="fixed w-full z-10 flex justify-end items-center top-4 right-2">
-		<button class="mr-auto ml-[20px]"><a class="btn btn-sm btn-outline btn-accent" href="/">develog</a></button>
+		<button class="ml-[20px] p-2"><a class="btn btn-sm btn-outline btn-accent" href="/">develog</a></button>
+		<a href="/usr/home/test" class="ml-[20px] mr-auto text-white">
+	    	<i class="fa-solid fa-flask p-2"></i>
+	    </a>
 		<ul class="flex">
 			<c:if test="${rq.getLoginedMemberId() == 0}">
 				<li><a class="p-2 btn btn-sm btn-outline btn-accent" href="/usr/member/login">로그인</a></li>
@@ -52,5 +55,12 @@
 			</c:if>
 		</ul>
 	</header>
+	
+	<!-- 배경화면  -->
+   	<div class="fixed left-0 right-0 top-0">
+   		<img src="https://t1.daumcdn.net/cfile/tistory/2250EA5054FF120605" 
+   		alt=""
+   		class="w-full opacity-80" />
+   	</div>
 	
 	

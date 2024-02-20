@@ -36,4 +36,9 @@ public class UsrHomeController {
 	public String showRoot() {
 		return "redirect:/usr/home/main";
 	}
+	
+	@RequestMapping("/usr/home/test")
+	public String test() {
+		return "/usr/home/test";
+	}
 }

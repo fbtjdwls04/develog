@@ -30,13 +30,6 @@
 		}
    	</script>
    	
-   	<!-- 배경화면  -->
-   	<div class="fixed left-0 right-0 top-0">
-   		<img src="https://t1.daumcdn.net/cfile/tistory/2250EA5054FF120605" 
-   		alt=""
-   		class="w-full opacity-80" />
-   	</div>
-   	
 	<section class="flex flex-col justify-center items-center mt-[200px]">
 		<form action="doPwModify" onsubmit="pwModifySubmit(this); return false;" method="post">
 			<table class="table text-center bg-gray-200 overflow-hidden" >

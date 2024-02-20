@@ -3,11 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@ include file="../common/head.jsp"%>
-<!-- 배경화면  -->
-<div class="fixed left-0 right-0 top-0">
-	<img src="https://t1.daumcdn.net/cfile/tistory/2250EA5054FF120605"
-		alt="" class="w-full opacity-80" />
-</div>
 
 <script>
 		$(document).ready(function() {
@@ -118,20 +113,18 @@
 				class="mb-2 flex">[${nowBoard.name }]</a>
 			<p class="text-bold text-3xl">${article.title }</p>
 			<br /> 
-			<div class="flex">
-				<span class="text-base font-bold">
-					<i class="fa-regular fa-user"></i> 
-					<a href="list?memberId=${article.memberId }">
+			<div class="flex items-center">
+				<p class="text-base font-bold flex items-center">
+					<a href="list?memberId=${article.memberId }" class="font-bold text-[18px]">
 						${article.writerName}
 					</a>
-				</span> 
-				&nbsp; 
-				<span>${article.updateDate.substring(2,16) }</span>
+				</p> 
+				<p class="ml-4">${article.updateDate.substring(2,16) }</p>
 				<c:if test="${article.regDate != article.updateDate }">
 					<span class="text-[gray]"> (수정됨) </span>
 				</c:if>
 				&nbsp; 
-				<span>조회 ${article.hitCount }</span>
+				<p class="ml-2">조회 ${article.hitCount }</p>
 				<div class="ml-auto">
 					<c:if test="${prevArticle != null}">
 						<a href="detail?id=${prevArticle.id}" class="btn btn-sm mr-2">이전 글</a>

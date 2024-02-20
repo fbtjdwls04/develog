@@ -20,7 +20,7 @@
 	};
 	
 	const boardModify_getForm = function(id) {
-			/* 해당 댓글을 제외한 나머지는 댓글만 보이게 (수정 입력칸 여러개 안켜지게) */
+			/* 해당 게시판을 제외한 나머지는 게시판은 보이게 (수정 입력칸 여러개 안켜지게) */
 			
 		$('.board').css("display", "flex");
 		$('.boardModifyForm').hide();
@@ -30,7 +30,7 @@
 		$('#boardModifyForm' + id).css("display", "flex");
 		
 		let textarea = document.getElementById('textarea' + id);
-		resize(textarea);
+		resizeItd(textarea);
 	};
 		
 		/* 수정 입력칸 닫기 */
@@ -46,7 +46,7 @@
 			$("#itd").hide();
 			
 			let itdTextarea = document.getElementById('itdTextarea');
-			resize(itdTextarea);
+			resizeItd(itdTextarea);
 		});
 		
 		$("#itdFormCancleBtn").click(function() {
@@ -56,7 +56,7 @@
 		});
 	})
 	;
-	const resize = function(e) {
+	const resizeItd = function(e) {
    			e.style.height = 'auto';
    			e.style.height = (20 + e.scrollHeight) + 'px';
    		};
@@ -83,12 +83,17 @@
 		<!-- 프로필 화면 -->
 		<div class="avatar mt-20">
 		  <div class="w-[100px] rounded-full">
-		  	<c:if test="${member.profillImg == null }">
-		    	<img src="https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTgy/MDAxNjA0MjI4ODc1NDMw.Ex906Mv9nnPEZGCh4SREknadZvzMO8LyDzGOHMKPdwAg.ZAmE6pU5lhEdeOUsPdxg8-gOuZrq_ipJ5VhqaViubI4g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%ED%95%98%EB%8A%98%EC%83%89.jpg?type=w800" alt="" />
-		  	</c:if>
-		  	<c:if test="${member.profillImg != null }">
-				<img src="${member.profillImg }"/>		  	
-		  	</c:if>
+			  	<c:if test="${member.profillImg == null }">
+				  	<a href="https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTgy/MDAxNjA0MjI4ODc1NDMw.Ex906Mv9nnPEZGCh4SREknadZvzMO8LyDzGOHMKPdwAg.ZAmE6pU5lhEdeOUsPdxg8-gOuZrq_ipJ5VhqaViubI4g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%ED%95%98%EB%8A%98%EC%83%89.jpg?type=w800"
+				  	target="_blank">
+				    	<img src="https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTgy/MDAxNjA0MjI4ODc1NDMw.Ex906Mv9nnPEZGCh4SREknadZvzMO8LyDzGOHMKPdwAg.ZAmE6pU5lhEdeOUsPdxg8-gOuZrq_ipJ5VhqaViubI4g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%ED%95%98%EB%8A%98%EC%83%89.jpg?type=w800" alt="" />
+				  	</a>
+			  	</c:if>
+			  	<c:if test="${member.profillImg != null }">
+			  		<a href="${member.profillImg }" target="_blank">
+						<img src="${member.profillImg }"/>		  	
+			  		</a>
+			  	</c:if>
 		  </div>
 		</div>
 		<p class="m-4 text-2xl">${member.nickname} 의 블로그</p>
@@ -98,7 +103,7 @@
 		<c:if test="${member.id == rq.getLoginedMemberId() }">
 			<button id="itdBtn" class="absolute right-[20px] top-[20px] hover:text-[gray]"><i class="fa-solid fa-pen"></i></button>
 			<form id="itdForm" action="/usr/member/doModifyIntroduct" class="hidden" onsubmit="itdSubmit(this); return false">
-				<textarea id="itdTextarea" name="itd" cols="30" rows="2" onkeydown="resize(this);">${member.introduction }</textarea>
+				<textarea id="itdTextarea" name="itd" cols="30" rows="2" onkeydown="resizeItd(this);">${member.introduction }</textarea>
 				<div class="flex justify-end">
 					<button class="btn btn-sm">수정</button>
 					<button class="btn btn-sm" id="itdFormCancleBtn" type="button">취소</button>
