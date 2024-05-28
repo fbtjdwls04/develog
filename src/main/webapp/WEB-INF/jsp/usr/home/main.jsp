@@ -21,8 +21,11 @@
 	   				</li>
 	   			</c:forEach>
    			</ul>
+   			
    		</nav>
    	</div>
+   	
+   	
 	
 	<%@ include file="../common/foot.jsp" %>
 	

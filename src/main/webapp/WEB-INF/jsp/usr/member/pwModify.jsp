@@ -10,7 +10,7 @@
 
    			if(e.password.value.length == 0){
    				alert('비밀번호를 입력해주세요');
-   				e.loginPw.focus();
+   				e.password.focus();
    				return;
    			}
    			
@@ -51,7 +51,7 @@
 				</tr>
 				<tr>
 					<th colspan="2" class="p-0 hover:bg-base-200">
-						<button class="w-full text-center p-4">비밀번호 수정</button>
+						<button class="w-full text-center p-4">수정</button>
 					</th>
 				</tr>
 			</table>

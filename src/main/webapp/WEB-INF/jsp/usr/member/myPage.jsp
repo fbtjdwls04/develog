@@ -81,9 +81,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" class="p-0 hover:bg-gray-200">
-						<button type="button" class="w-full text-center p-4 font-bold">
-							<a href="pwModify">비밀번호 수정</a>
-						</button>
+						<a href="pwModify" class="block font-bold p-4">비밀번호 수정</a>
 					</td>
 				</tr>
 			</table>

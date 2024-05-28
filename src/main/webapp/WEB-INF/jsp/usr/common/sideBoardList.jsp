@@ -11,8 +11,8 @@
 			return;
 		};
 		
-		if(e.boardName.value.length > 10){
-			alert("게시판 이름은 최대 10글자까지 가능합니다");
+		if(e.boardName.value.length > 20){
+			alert("게시판 이름은 최대 20글자까지 가능합니다");
 			return;
 		};
 		
@@ -121,7 +121,7 @@
 			<li class="mb-4">
 				<c:if test="${member.id == rq.getLoginedMemberId() }">
 					<form action="/usr/board/create" class="flex items-center justify-center" onsubmit="boardSubmit(this); return false;">
-						<input name="boardName" type="text" class="input input-sm input-outlined input-bordered" placeholder="게시판 이름은 최대 10글자까지 가능합니다"/>
+						<input name="boardName" type="text" class="input input-sm input-outlined input-bordered" placeholder="게시판 이름은 최대 20글자까지 가능합니다"/>
 						<button class="btn btn-sm btn-outline">게시판 추가</button>
 					</form>
 				</c:if>
@@ -153,7 +153,7 @@
 						onsubmit="boardSubmit(this); return false;"
 						class="hidden boardModifyForm flex justify-center items-center">
 						<input type="hidden" name="id" value="${board.id}" />
-						<input type="text" name="boardName" value="${board.name }" class="input input-sm input-bordered" placeholder="게시판 이름은 최대 10글자까지 가능합니다"/>
+						<input type="text" name="boardName" value="${board.name }" class="input input-sm input-bordered" placeholder="게시판 이름은 최대 20글자까지 가능합니다"/>
 						<button type="button" onclick="boardModifyForm_cancle(${board.id})" class="btn btn-sm btn-error">취소</button>
 						<button class="btn-sm btn-accent btn">수정</button>
 					</form>

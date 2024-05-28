@@ -50,7 +50,7 @@ public class UsrMemberController {
 		
 		rq.login(member.getId(), member.getNickname());
 		
-		return Util.jsReplace(Util.f("%s님 안녕하세요", member.getNickname()),"/");
+		return Util.jsReplace(Util.f("%s[%s]님 안녕하세요", member.getLoginId(), member.getNickname()),"/");
 	}
 	
 	@RequestMapping("/usr/member/doLogout")

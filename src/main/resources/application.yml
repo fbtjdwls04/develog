@@ -3,6 +3,11 @@ server:
   max-http-request-header-size: 40KB
   
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+        
   mail:
     host: smtp.gmail.com
     port: 587
@@ -22,8 +27,8 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/develog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
     username: root
-    password:
-  
+    password: 
+
   
 mybatis:
   type-aliases-package: com.koreaIT.develog.vo
@@ -34,5 +39,7 @@ custom:
   emailFrom: no-reply@localhost
   emailFromName: develog
   kakaoApiKey: 24d745a318b8ce262160b63668ec4ce7
-
+  
+file:
+    dir: C:/work/upload
   

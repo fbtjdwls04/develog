@@ -58,8 +58,8 @@ public class UsrBoardController {
 			return Util.jsHistoryBack("게시판 이름을 입력해주세요");
 		}
 		
-		if(boardName.length() > 10) {
-			return Util.jsHistoryBack("게시판 이름은 최대 10글자까지 가능합니다");
+		if(boardName.length() > 20) {
+			return Util.jsHistoryBack("게시판 이름은 최대 20글자까지 가능합니다");
 		}
 		
 		boardService.boardModify(id, boardName);
